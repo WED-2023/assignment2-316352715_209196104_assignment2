@@ -1,10 +1,14 @@
-const users=[    {username: 'p',password: 'testuser'}
-];
+let users = JSON.parse(localStorage.getItem("users"));
+if (!users) {
+  users = [{ username: "p", password: "testuser" }];
+  localStorage.setItem("users", JSON.stringify(users));
+}
 
-const togglePassword = document.getElementById("togglePassword");
-const passwordInput = document.getElementById("password");
-const toggleConfirm = document.getElementById("toggleConfirm");
-const confirmInput = document.getElementById("confirm");
+
+const togglePassword = document.getElementById("registerTogglePassword");
+const passwordInput = document.getElementById("registerPassword");
+const toggleConfirm = document.getElementById("registerToggleConfirm");
+const confirmInput = document.getElementById("registerConfirm");
 
 togglePassword.addEventListener("change", function () {
   passwordInput.type = this.checked ? "text" : "password";
@@ -17,13 +21,13 @@ toggleConfirm?.addEventListener("change", function () {
 document.getElementById("registerForm").addEventListener("submit", function(e) {
   e.preventDefault(); // prevent form from submitting until we validate
 
-  const firstName = document.getElementById("firstname").value.trim();
-  const lastName = document.getElementById("lastname").value.trim();
-  const userName = document.getElementById("username").value.trim();
-  const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value;
-  const confirmPassword = document.getElementById("confirm").value;
-  const error = document.getElementById("error");
+  const firstName = document.getElementById("registerFirstname").value.trim();
+  const lastName = document.getElementById("registerLastname").value.trim();
+  const userName = document.getElementById("registerUsername").value.trim();
+  const email = document.getElementById("registerEmail").value.trim();
+  const password = document.getElementById("registerPassword").value;
+  const confirmPassword = document.getElementById("registerConfirm").value;
+  const error = document.getElementById("registerError");
 
 
   // Clear previous errors
@@ -66,8 +70,10 @@ document.getElementById("registerForm").addEventListener("submit", function(e) {
 
   console.log("Form submitted!");
 
-  const newUser = {userName,password}
+  const newUser = {username:userName,password}
   users.push(newUser);
+  localStorage.setItem("users",JSON.stringify(users));
+  
   document.getElementById("registerForm").reset();
 
   console.log("All users:", users);
