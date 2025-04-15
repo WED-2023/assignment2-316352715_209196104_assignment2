@@ -226,6 +226,7 @@ function updatePositions()
          cannonball.y - cannonballRadius > target.start.y &&
          cannonball.y + cannonballRadius < target.end.y)
       {
+
          // determine target section number (0 is the top)
          var section = 
             Math.floor((cannonball.y  - target.start.y) / pieceLength);
