@@ -1,11 +1,12 @@
-function showScreen(screenId) {
+
+ function showScreen(screenId) {
   document.querySelectorAll('.screen').forEach(screen => {
     screen.classList.remove('active');
   });
   document.getElementById(screenId).classList.add('active');
 }
 window.addEventListener('DOMContentLoaded', () => {
-  showScreen('configScreen');
+  showScreen('homeScreen');
 
 
   const regBtn = document.getElementById('registerBtn');
@@ -17,7 +18,7 @@ window.addEventListener('DOMContentLoaded', () => {
   const logBtn = document.getElementById('loginBtn');
   if (logBtn) {
     logBtn.addEventListener('click', () => {
-      showScreen('registerScreen');
+      showScreen('loginScreen');
     });
   }
 

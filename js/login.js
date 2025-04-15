@@ -1,3 +1,5 @@
+import {showScreen} from "./game.js"
+
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("loginForm");
 
@@ -19,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log("Users from storage:", users);
 
       if (found) {
-        alert("Login successful!");
+        showScreen("configScreen")
       } else {
         console.log("Trying to login with:", username, password);
         console.log("Users in localStorage:", users);

@@ -64,19 +64,16 @@ document.getElementById("registerForm").addEventListener("submit", function(e) {
   }
 
   // ✅ If all good:
-  alert("Registration successful!");
+  
   // You can submit the form here (or send it with fetch)
   // e.target.submit();
-
-  console.log("Form submitted!");
-
+  showScreen("configScreen")
   const newUser = {username:userName,password}
   users.push(newUser);
   localStorage.setItem("users",JSON.stringify(users));
   
-  document.getElementById("registerForm").reset();
 
-  console.log("All users:", users);
+
 
 
 
