@@ -52,8 +52,8 @@ const monsters = [];
 const rows = 4;
 const cols = 5;
 const monsterSpacing = 10;
-const monsterWidth = 42;
-const monsterHeight = 42;
+const monsterWidth = 32;
+const monsterHeight = 32;
 let monsterDirection = 1;
 let monsterSpeed = 1;
 

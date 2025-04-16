@@ -25,14 +25,25 @@ export function renderConfigWizard() {
 
   fireKeyBtn.addEventListener("click", () => {
     fireKeyDisplay.textContent = "Waiting for key press...";
-    window.addEventListener("keydown", function handler(e) {
-      fireKey = e.code;
-      fireKeyDisplay.textContent = fireKey;
-      sessionStorage.setItem("fireKey", fireKey);
-      window.removeEventListener("keydown", handler);
-      showSaved();
-    });
+    document.activeElement.blur(); 
+    setTimeout(() => {
+      window.addEventListener("keydown", function handler(e) {
+        fireKey = e.code;
+        const displayName = getReadableKeyName(e.code);
+        fireKeyDisplay.textContent = displayName;
+        sessionStorage.setItem("fireKey", fireKey);
+        window.removeEventListener("keydown", handler);
+        showSaved();
+      });
+    }, 50);
   });
+
+  function getReadableKeyName(code) {
+    if (code === "Space") return "Spacebar";
+    if (code.startsWith("Key")) return code.replace("Key", "");
+    if (code.startsWith("Digit")) return code.replace("Digit", "");
+    return code;
+  }
 
   saveBtn.addEventListener("click", () => {
     const val = parseInt(durationInput.value);
