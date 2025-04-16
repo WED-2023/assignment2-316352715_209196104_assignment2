@@ -65,19 +65,20 @@
           </form>
         </div>
         </div>
-    
-    <div id="configScreen" class="screen">
-        <div id="configSettings" >            
+        <div id="configScreen" class="screen">
+          <div id="configSettings"></div>
         </div>
-    </div>
-    <div id="gameScreen" class="screen">
-        <canvas id = "gameCanvas" width = "1000" height = "800"></canvas> 
-        <div id="highScoresBox">
-            <h3>🏆 Your High Scores</h3>
-            <ol id="scoreList"></ol>
+
+        <div id="gameScreen" class="screen">
+          <div id="gameWrapper">
+            <canvas id="gameCanvas" width="1000" height="800"></canvas> 
+            <div id="highScoresBox">
+              <h3>🏆 Your High Scores</h3>
+              <ol id="scoreList"></ol>
+            </div>
           </div>
-          
-    </div>
+        </div>
+
 
     <template id="configFormTemplate">
       <div class="config-container">
@@ -153,8 +154,9 @@
     <script type="module" src="js/nav.js"></script>
     <script type="module" src ="js/config.js"></script>
 
-    <button id="mainMenuButton">Main Menu</button>
-    <button id="settingsButton">Settings</button>
+    <button id="mainMenuButton" class="side-button" style="top: 20px;">Main Menu</button>
+    <button id="aboutButton" class="side-button" style="top: 80px;">About</button>
+    <button id="settingsButton" class="side-button" style="top: 140px;">Settings</button>    
     <button id="newGameButton" class="arcade-button">NEW GAME</button>
 
 
