@@ -324,6 +324,38 @@
   
   
   
+  #highScoresBox {
+    position: absolute;
+    top: 50px;
+    right: 30px;
+    background: rgba(0, 0, 0, 0.7);
+    border: 2px solid #00ffff;
+    padding: 10px 20px;
+    color: white;
+    font-family: 'Orbitron', sans-serif;
+    z-index: 100;
+    border-radius: 10px;
+    max-width: 200px;
+  }
+  
+  #highScoresBox h3 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    text-align: center;
+    color: #ffd700;
+  }
+  
+  #scoreList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  #scoreList li {
+    margin: 4px 0;
+    text-align: center;
+  }
+  
 
 
 

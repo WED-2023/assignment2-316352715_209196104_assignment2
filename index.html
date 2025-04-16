@@ -13,22 +13,16 @@
     
 </head>
 <body>
-  <div id="homeScreen" class="screen">
-    <div class="home-layout">
-      <img id="logo" src="assets/images/logo.png" alt="logo">
-  
-      <div class="names">
-        <h1>Rom Sheynis - 209196104</h1>
-        <h1>Lioz Shor - 316352715</h1>
-      </div>
-  
-      <div id="button-container">
-        <button id="registerBtn">Register</button> 
-        <button id="loginBtn">Login</button>
-      </div>
+    <div id="homeScreen" class="screen">
+        <img id="logo" src="assets/images/logo.png" alt="">
+        <h1 >Rom Sheynis - 209196104</h1>
+        <h1 >Lioz Shor - 316352715</h1>
+        <div id="button-container">
+            <button id="registerBtn">Register</button> 
+            <button id="loginBtn">Login</button>
+
+        </div>
     </div>
-  </div>
-  
 
 
     <div id="registerScreen" class="screen">
@@ -76,12 +70,14 @@
         <div id="configSettings" >            
         </div>
     </div>
-    <div id="gameScreen" class="screen gameScreen">
-      <canvas id="gameCanvas"></canvas>
+    <div id="gameScreen" class="screen">
+        <canvas id = "gameCanvas" width = "1000" height = "800"></canvas> 
+        <div id="highScoresBox">
+            <h3>🏆 Your High Scores</h3>
+            <ol id="scoreList"></ol>
+          </div>
+          
     </div>
-    
-
-    
 
     <template id="configFormTemplate">
       <div class="config-container">
@@ -153,6 +149,7 @@
     <script type="module" src ="js/utils.js"></script>
     <script type="module" src="js/registerform.js"></script>
     <script type="module" src="js/login.js"></script>
+    <script type="module" src="js/game.js"></script>
     <script type="module" src="js/nav.js"></script>
     <script type="module" src ="js/config.js"></script>
 
@@ -161,7 +158,7 @@
     <button id="newGameButton" class="arcade-button">NEW GAME</button>
 
 
-    <!-- <template id="configFormTemplate">
+    <template id="configFormTemplate">
       <div class="config-container">
         <h1>Game Configuration</h1>
     
@@ -181,7 +178,7 @@
         </div>
     
         <p id="configSavedMessage" class="hidden">Settings saved ✅</p>
-      </div> -->
+      </div>
     </template>
     
 
