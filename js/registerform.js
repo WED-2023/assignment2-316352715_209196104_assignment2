@@ -1,4 +1,5 @@
-import {showScreen} from "./welcome.js"
+import {showScreen} from "./nav.js"
+import { showMessage } from "./utils.js";
 
 
 let users = JSON.parse(localStorage.getItem("users"));
@@ -35,38 +36,48 @@ document.getElementById("registerForm").addEventListener("submit", function(e) {
 
   // Clear previous errors
   error.textContent = "";
+// 1. Check if all fields are filled
+if (!firstName || !lastName || !userName || !email || !password || !confirmPassword) {
+  showMessage("registerMessage", "Please fill out all fields.", "red");
+  return;
+}
 
-  // 1. Check if all fields are filled
-  if (!firstName || !lastName || !userName || !email || !password || !confirmPassword) {
-    error.textContent = "Please fill out all fields.";
-    return;
-  }
+// 2. Name and Last Name should be letters only
+if (!/^[a-zA-Z]+$/.test(firstName) || !/^[a-zA-Z]+$/.test(lastName)) {
+  showMessage("registerMessage", "First and last name must contain letters only.", "red");
+  return;
+}
 
-  // 2. Name and Last Name should be letters only
-  if (!/^[a-zA-Z]+$/.test(firstName) || !/^[a-zA-Z]+$/.test(lastName)) {
-    error.textContent = "First and last name must contain letters only.";
-    return;
-  }
+// 3. Check if email is valid
+if (!/^\S+@\S+\.\S+$/.test(email)) {
+  showMessage("registerMessage", "Please enter a valid email address.", "red");
+  return;
+}
 
-  // 3. Check if email is valid
-  if (!/^\S+@\S+\.\S+$/.test(email)) {
-    error.textContent = "Please enter a valid email address.";
-    return;
-  }
+// 4. Password must be at least 8 characters, with numbers and letters
+if (password.length < 8 || !/[a-zA-Z]/.test(password) || !/[0-9]/.test(password)) {
+  showMessage("registerMessage", "Password must be at least 8 characters and contain both letters and numbers.", "red");
+  return;
+}  
 
-  // 4. Password must be at least 8 characters, with numbers and letters
-  if (password.length < 8 || !/[a-zA-Z]/.test(password) || !/[0-9]/.test(password)) {
-    error.textContent = "Password must be at least 8 characters and contain both letters and numbers.";
-    return;
-  }  
+// 5. Passwords match
+if (password !== confirmPassword) {
+  showMessage("registerMessage", "Passwords do not match.", "red");
+  return;
+}
 
-  // 5. Passwords match
-  if (password !== confirmPassword) {
-    error.textContent = "Passwords do not match.";
-    return;
-  }
 
   // ✅ If all good:
+
+  showMessage("registerMessage", "Registration succeeded!", "lime");
+
+  setTimeout(() => {
+    const newUser = { username: userName, password };
+    users.push(newUser);
+    localStorage.setItem("users", JSON.stringify(users));
+    sessionStorage.setItem("nextScreen", "configScreen");
+    showScreen("configScreen");
+  }, 1500);
   
   // You can submit the form here (or send it with fetch)
   // e.target.submit();

@@ -1,33 +1,37 @@
-import {showScreen} from "./welcome.js"
+import { showScreen } from "./nav.js";
+import { showMessage } from "./utils.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("loginForm");
+  const toggle = document.getElementById("loginTogglePassword");
+  const passwordInput = document.getElementById("loginPassword");
+
+  if (toggle && passwordInput) {
+    toggle.addEventListener("change", () => {
+      passwordInput.type = toggle.checked ? "text" : "password";
+    });
+  }
 
   if (form) {
     form.addEventListener("submit", function(e) {
       e.preventDefault();
 
       const users = JSON.parse(localStorage.getItem("users")) || [];
-
       const username = document.getElementById("loginUsername").value.trim();
-      const password = document.getElementById("loginPassword").value;
+      const password = passwordInput.value;
       const error = document.getElementById("loginError");
-
       error.textContent = "";
 
       const found = users.find(user => user.username === username && user.password === password);
 
-      console.log("Trying to login with:", username, password);
-      console.log("Users from storage:", users);
-
       if (found) {
-        sessionStorage.setItem("nextScreen", "configScreen");
-        showScreen("configScreen")
+        showMessage("loginMessage", "Login successful!");
+        setTimeout(() => {
+          sessionStorage.setItem("nextScreen", "configScreen");
+          showScreen("configScreen");
+        }, 1500);
       } else {
-
-        console.log("Trying to login with:", username, password);
-        console.log("Users in localStorage:", users);
-        error.textContent = "Invalid username or password.";
+        showMessage("loginMessage", "Login failed!", "red");
       }
     });
   }
