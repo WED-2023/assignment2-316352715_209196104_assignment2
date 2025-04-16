@@ -27,6 +27,17 @@ monsterImage.src = "assets/images/kfc.png";
 const heartImage = new Image();
 heartImage.src = "assets/images/heart.png";
 
+//Load sounds
+const gameSong = new Audio("assets/sounds/gameSong.mp3");
+gameSong.loop = true; 
+
+const gameOverSong = new Audio("assets/sounds/game-over-arcade-6435.mp3");
+const gameWinSong = new Audio("assets/sounds/gameWon.mp3");
+const enemyShootMp3 = new Audio("assets/sounds/enemyShot.mp3");
+const heroShootMp3 = new Audio("assets/sounds/heroShot.mp3");
+
+
+
 // Hero object (the chicken)
 const hero = {
   x: 100,
@@ -70,6 +81,8 @@ for (let row = 0; row < rows; row++) {
 }
 
 export function initGame(settings) {
+  gameSong.currentTime = 0; 
+  gameSong.play();
   const { fireKey, gameDuration } = settings;
   console.log("Game starting with:", fireKey, gameDuration);
   currentFireKey = fireKey;
@@ -87,15 +100,17 @@ export function initGame(settings) {
 // Key tracking
 const keys = {};
 document.addEventListener("keydown", e => {
-  keys[e.key] = true;
   if (e.code === currentFireKey) {
+    e.preventDefault(); 
     shoot();
   }
+  keys[e.key] = true;
 });
 document.addEventListener("keyup", e => delete keys[e.key]);
 
 function shoot() {
   if (gameOver) return;
+  heroShootMp3.play()
   bullets.push({
     x: hero.x + hero.width / 2,
     y: hero.y,
@@ -116,7 +131,7 @@ if (increaseTimes > 0) {
 
 function enemyShoot() {
   if (gameOver || monsters.length === 0) return;
-
+  
   if (enemyBullets.length > 0) {
     const bullet = enemyBullets[enemyBullets.length - 1];
     if (bullet.y < canvas.height * 0.75) return;
@@ -132,6 +147,7 @@ function enemyShoot() {
     radius: ENEMY_BULLET_RADIUS,
     speed: ENEMY_BULLET_SPEED
   });
+  enemyShootMp3.play()
 }
 
 function update() {
@@ -247,11 +263,14 @@ function draw() {
   }
 
   if (gameOver) {
+    gameSong.pause();
     if (gameWon) {
+      gameWinSong.play()
       ctx.fillStyle = "white";
       ctx.font = "40px Arial";
       ctx.fillText("Congrats you won!!!", canvas.width / 2 - 120, canvas.height / 2);
     } else {
+      gameOverSong.play()
       ctx.fillStyle = "white";
       ctx.font = "40px Arial";
       ctx.fillText("GAME OVER", canvas.width / 2 - 120, canvas.height / 2);

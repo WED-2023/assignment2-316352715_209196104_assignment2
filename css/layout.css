@@ -1,39 +1,63 @@
-#button-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 40px;
-    margin-top: 30px;
-  }
-  
-  .screen {
-    display: none;
-  }
-  
-  .screen.active {
-    display: block;
-  }
-  
+/* כפתורי ניווט קבועים בצד */
+#mainMenuButton,
+#aboutButton,
+#settingsButton {
+  position: fixed;
+  left: 20px;
+  z-index: 9999;
+  background: transparent;
+  border: 2px solid #00c6ff;
+  color: #00c6ff;
+  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 30px;
+  box-shadow: none;
+}
 
-  .gameScreen {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    background: radial-gradient(circle, #001f3f 0%, #000000 100%);
-    border: 5px solid #00c6ff;
-    border-radius: 20px;
-    box-shadow:
-      0 0 20px #00c6ff,
-      0 0 40px #0072ff,
-      inset 0 0 20px rgba(0, 255, 255, 0.3);
-    width: fit-content;
-    margin: 2rem auto;
-  }
-  
-  #gameCanvas {
-    background-color: #111; /* כהה כדי שהציורים יבלטו */
-    border-radius: 12px;
-    image-rendering: pixelated; /* אופציונלי – לאפקט רטרו */
-  }
-  
+#mainMenuButton {
+  top: 20px;
+}
+
+#aboutButton {
+  top: 80px;
+}
+
+#settingsButton {
+  top: 140px;
+}
+
+/* מסכי התוכן - כל מסך ממורכז לחלוטין */
+.screen {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.screen.active {
+  display: flex;
+}
+
+/* מסך משחק עם מסגרת מגניבה */
+.gameScreen {
+  background: radial-gradient(circle, #001f3f 0%, #000000 100%);
+  border: 5px solid #00c6ff;
+  border-radius: 20px;
+  box-shadow:
+    0 0 20px #00c6ff,
+    0 0 40px #0072ff,
+    inset 0 0 20px rgba(0, 255, 255, 0.3);
+  width: fit-content;
+  padding: 20px;
+}
+
+/* קונטיינר כפתורים במסך הבית */
+#button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  margin-top: 30px;
+}

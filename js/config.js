@@ -69,4 +69,15 @@ export function renderConfigWizard() {
     msg.classList.remove("hidden");
     setTimeout(() => msg.classList.add("hidden"), 2000);
   }
+
+  
 }
+
+export function resetGameConfig() {
+  sessionStorage.removeItem("fireKey");
+  sessionStorage.removeItem("gameDuration");
+  console.log("Game configuration has been reset.");
+  return { fireKey: null, gameDuration: null };
+}
+
+
