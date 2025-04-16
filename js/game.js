@@ -1,12 +1,19 @@
 
- function showScreen(screenId) {
+export function showScreen(screenId) {
   document.querySelectorAll('.screen').forEach(screen => {
     screen.classList.remove('active');
   });
   document.getElementById(screenId).classList.add('active');
 }
 window.addEventListener('DOMContentLoaded', () => {
-  showScreen('homeScreen');
+  const defaultScreen = sessionStorage.getItem("nextScreen");
+
+  if (defaultScreen) {
+    showScreen(defaultScreen);
+    sessionStorage.removeItem("nextScreen"); // כדי שלא יישמר תמיד
+  } else {
+    showScreen("homeScreen");
+  }
 
 
   const regBtn = document.getElementById('registerBtn');
