@@ -1,72 +1,61 @@
-import { initGame, currentFireKey } from './game.js';
+import { initGame } from './game.js';
 import { showScreen } from './nav.js';
-let fireKey = null; 
-let gameDuration = null;
-document.addEventListener('DOMContentLoaded', () => {
-  showFireKeyStep();
-});
 
-function showFireKeyStep() {
-  const container = document.getElementById('fireKeyDisplay');
-  container.innerHTML = `
-    <h1>Configuration Screen</h1>
-    <h2>Configure Fire Key</h2>
-    <p id="selectedKey">Press a key to assign it as your "FIRE" action:</p>
-    <button id="setFireKeyBtn">Set Fire Key</button>
-  `;
+let fireKey = sessionStorage.getItem("fireKey") || null;
+let gameDuration = parseInt(sessionStorage.getItem("gameDuration")) || 2;
 
-  const setKeyBtn = document.getElementById('setFireKeyBtn');
-  const selectedKeyText = document.getElementById('selectedKey');
+export function renderConfigWizard() {
+  const wrapper = document.getElementById("configSettings");
+  if (!wrapper) return;
 
-  setKeyBtn.addEventListener('click', () => {
-    selectedKeyText.textContent = "Waiting for key press...";
-    window.addEventListener('keydown', function handler(e) {
+  wrapper.replaceChildren();
+
+  const container = document.getElementById("configFormTemplate").content.cloneNode(true);
+  wrapper.appendChild(container);
+
+  const fireKeyDisplay = wrapper.querySelector("#currentFireKey");
+  const fireKeyBtn = wrapper.querySelector("#setFireKeyBtn");
+  const durationInput = wrapper.querySelector("#gameDurationInput");
+  const saveBtn = wrapper.querySelector("#saveSettingsBtn");
+  const startBtn = wrapper.querySelector("#startGameBtn");
+  const msg = wrapper.querySelector("#configSavedMessage");
+
+  fireKeyDisplay.textContent = fireKey || "Not set";
+  durationInput.value = gameDuration;
+
+  fireKeyBtn.addEventListener("click", () => {
+    fireKeyDisplay.textContent = "Waiting for key press...";
+    window.addEventListener("keydown", function handler(e) {
       fireKey = e.code;
-      selectedKeyText.textContent = `Selected fire key: ${fireKey}`;
-      window.removeEventListener('keydown', handler);
-      setTimeout(showTimeSelectionStep, 1000); // עוברים שלב
+      fireKeyDisplay.textContent = fireKey;
+      sessionStorage.setItem("fireKey", fireKey);
+      window.removeEventListener("keydown", handler);
+      showSaved();
     });
   });
-}
 
-function showTimeSelectionStep() {
-  const container = document.getElementById('fireKeyDisplay');
-  container.innerHTML = `
-    <h2>Select Game Duration</h2>
-    <label for="gameTime">Enter game time (in minutes):</label>
-    <input type="number" id="gameTime" min="2" value="2" />
-    <button id="confirmTimeBtn">Confirm</button>
-    <p id="timeError" style="color: red;"></p>
-  `;
-
-  const confirmBtn = document.getElementById('confirmTimeBtn');
-  const input = document.getElementById('gameTime');
-  const error = document.getElementById('timeError');
-
-  confirmBtn.addEventListener('click', () => {
-    const val = parseInt(input.value);
+  saveBtn.addEventListener("click", () => {
+    const val = parseInt(durationInput.value);
     if (val >= 2) {
       gameDuration = val;
-      showStartGameStep();
+      sessionStorage.setItem("gameDuration", gameDuration);
+      showSaved();
     } else {
-      error.textContent = "Game time must be at least 2 minutes.";
+      alert("Game time must be at least 2 minutes.");
     }
   });
-}
 
-function showStartGameStep() {
-  const container = document.getElementById('fireKeyDisplay');
-  container.innerHTML = `
-    <h2>You're Ready!</h2>
-    <p>Fire key: ${fireKey}</p>
-    <p>Game duration: ${gameDuration} minutes</p>
-    <button id="startGameBtn">Start Game</button>
-  `;
-
-  const startBtn = document.getElementById('startGameBtn');
-  startBtn.addEventListener('click', () => {
-    
-    showScreen('gameScreen');
+  startBtn.addEventListener("click", () => {
+    if (!fireKey || !gameDuration) {
+      alert("Please complete all settings before starting.");
+      return;
+    }
+    showScreen("gameScreen");
     initGame({ fireKey, gameDuration });
   });
+
+  function showSaved() {
+    msg.classList.remove("hidden");
+    setTimeout(() => msg.classList.add("hidden"), 2000);
+  }
 }

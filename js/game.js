@@ -40,8 +40,8 @@ const monsters = [];
 const rows = 4;
 const cols = 5;
 const monsterSpacing = 10;
-const monsterWidth = 32;
-const monsterHeight = 32;
+const monsterWidth = 42;
+const monsterHeight = 42;
 let monsterDirection = 1;
 const monsterSpeed = 1;
 
@@ -131,12 +131,7 @@ function update() {
 
       if (distance < monster.width / 2 + bullet.radius) {
         score++;
-        monsters[mIndex] = {
-          x: Math.random() * (canvas.width - 32),
-          y: Math.random() * (canvas.height * 0.5 - 32),
-          width: 32,
-          height: 32
-        };
+        monsters[mIndex] = {}
         bullets.splice(bIndex, 1);
       }
     });
