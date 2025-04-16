@@ -249,6 +249,72 @@
     color: black;
     box-shadow: 0 0 15px #00c6ff;
   }
+  #newGameButton {
+    display: none;
+  }
+  
+
+  .arcade-button {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  
+    padding: 15px 40px;
+    border: 3px solid #00ffff;
+    border-radius: 15px;
+    background: linear-gradient(145deg, #001f3f, #0072ff);
+    color: #00ffff;
+  
+    box-shadow: 0 0 20px #00c6ff, inset 0 0 10px #0072ff;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .arcade-button::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(0,255,255,0.2) 0%, transparent 70%);
+    animation: pulseGlow 2s infinite linear;
+    z-index: 0;
+  }
+  
+  .arcade-button:hover {
+    transform: scale(1.05);
+    background: linear-gradient(145deg, #0072ff, #00c6ff);
+    box-shadow: 0 0 30px #00ffff, inset 0 0 15px #00ffff;
+    color: black;
+  }
+  
+  .arcade-button:active {
+    transform: scale(0.95);
+  }
+  
+  @keyframes pulseGlow {
+    0% {
+      transform: rotate(0deg);
+      opacity: 0.6;
+    }
+    50% {
+      transform: rotate(180deg);
+      opacity: 1;
+    }
+    100% {
+      transform: rotate(360deg);
+      opacity: 0.6;
+    }
+  }
+  
+
+
+
   
   
   

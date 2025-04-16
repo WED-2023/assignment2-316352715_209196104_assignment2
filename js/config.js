@@ -17,7 +17,7 @@ export function renderConfigWizard() {
   const fireKeyBtn = wrapper.querySelector("#setFireKeyBtn");
   const durationInput = wrapper.querySelector("#gameDurationInput");
   const saveBtn = wrapper.querySelector("#saveSettingsBtn");
-  const startBtn = wrapper.querySelector("#startGameBtn");
+  // const startBtn = wrapper.querySelector("#startGameBtn");
   const msg = wrapper.querySelector("#configSavedMessage");
 
   fireKeyDisplay.textContent = fireKey || "Not set";
@@ -56,14 +56,14 @@ export function renderConfigWizard() {
     }
   });
 
-  startBtn.addEventListener("click", () => {
-    if (!fireKey || !gameDuration) {
-      alert("Please complete all settings before starting.");
-      return;
-    }
-    showScreen("gameScreen");
-    initGame({ fireKey, gameDuration });
-  });
+  // startBtn.addEventListener("click", () => {
+  //   if (!fireKey || !gameDuration) {
+  //     alert("Please complete all settings before starting.");
+  //     return;
+  //   }
+  //   showScreen("gameScreen");
+  //   initGame({ fireKey, gameDuration });
+  // });
 
   function showSaved() {
     msg.classList.remove("hidden");
