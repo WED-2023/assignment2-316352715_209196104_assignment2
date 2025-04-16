@@ -11,6 +11,8 @@ let remainingTime = 30;
 let gameOver = false;
 let score = 0;
 let gameTime = 30; // seconds
+let heroLives = 3; // chicken has initial 3 lives until game over
+let gameWon = false;
 
 // Load images
 const bgImage = new Image();
@@ -21,6 +23,9 @@ heroImage.src = "assets/images/chicken.png";
 
 const monsterImage = new Image();
 monsterImage.src = "assets/images/kfc.png";
+
+const heartImage = new Image();
+heartImage.src = "assets/images/heart.png";
 
 // Hero object (the chicken)
 const hero = {
@@ -38,7 +43,7 @@ const BULLET_RADIUS = 5;
 
 // Enemy bullets
 let enemyBullets = [];
-const ENEMY_BULLET_SPEED = 4;
+let ENEMY_BULLET_SPEED = 3;
 const ENEMY_BULLET_RADIUS = 5;
 let lastEnemyShooterIndex = null;
 
@@ -50,7 +55,7 @@ const monsterSpacing = 10;
 const monsterWidth = 32;
 const monsterHeight = 32;
 let monsterDirection = 1;
-const monsterSpeed = 1;
+let monsterSpeed = 1;
 
 // Initialize monsters in a 5x4 grid at the top
 for (let row = 0; row < rows; row++) {
@@ -74,6 +79,7 @@ export function initGame(settings) {
   bullets = [];
   enemyBullets = [];
   score = 0;
+  heroLives = 3;
   startTimer();
   loop();
 }
@@ -98,12 +104,22 @@ function shoot() {
   });
 }
 
+let increaseTimes = 4;
+function increaseEnemiesSpeed() {
+  monsterSpeed += 5;
+  ENEMY_BULLET_SPEED += 5;
+  increaseTimes--;
+}
+if (increaseTimes > 0) {
+  setInterval(increaseEnemiesSpeed, 5000);
+}
+
 function enemyShoot() {
   if (gameOver || monsters.length === 0) return;
 
   if (enemyBullets.length > 0) {
     const bullet = enemyBullets[enemyBullets.length - 1];
-    if (bullet.y < canvas.height * 0.75) return; // wait until bullet is 3/4 down
+    if (bullet.y < canvas.height * 0.75) return;
   }
 
   const randomIndex = Math.floor(Math.random() * monsters.length);
@@ -151,9 +167,17 @@ function update() {
       const distance = Math.sqrt(dx * dx + dy * dy);
 
       if (distance < monster.width / 2 + bullet.radius) {
-        score++;
+        if (mIndex <= 4) score += 20;
+        else if (mIndex <= 9) score += 15;
+        else if (mIndex <= 14) score += 10;
+        else if (mIndex <= 19) score += 5;
         monsters.splice(mIndex, 1);
         bullets.splice(bIndex, 1);
+        if (monsters.length === 0) {
+          gameOver = true;
+          gameWon = true;
+          return
+        }
       }
     });
   });
@@ -171,7 +195,11 @@ function update() {
     const distance = Math.sqrt(dx * dx + dy * dy);
 
     if (distance < hero.width / 2 + bullet.radius) {
-      gameOver = true;
+      enemyBullets.splice(index, 1);
+      heroLives--;
+      if (heroLives === 0) {
+        gameOver = true;
+      }
     }
   });
 
@@ -211,10 +239,23 @@ function draw() {
   ctx.font = "20px Arial";
   ctx.fillText("Score: " + score + " | Time left: " + Math.ceil(gameTime / 60), 20, 30);
 
+  // Draw hearts for lives
+  for (let i = 0; i < heroLives; i++) {
+    if (heartImage.complete) {
+      ctx.drawImage(heartImage, 20 + i * 40, 60, 30, 30);
+    }
+  }
+
   if (gameOver) {
-    ctx.fillStyle = "white";
-    ctx.font = "40px Arial";
-    ctx.fillText("GAME OVER", canvas.width / 2 - 120, canvas.height / 2);
+    if (gameWon) {
+      ctx.fillStyle = "white";
+      ctx.font = "40px Arial";
+      ctx.fillText("Congrats you won!!!", canvas.width / 2 - 120, canvas.height / 2);
+    } else {
+      ctx.fillStyle = "white";
+      ctx.font = "40px Arial";
+      ctx.fillText("GAME OVER", canvas.width / 2 - 120, canvas.height / 2);
+    }
   }
 }
 
