@@ -1,5 +1,7 @@
 import { showScreen } from "./nav.js";
 import { showMessage } from "./utils.js";
+import { renderConfigWizard } from "./config.js";
+
 
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("loginForm");
@@ -25,6 +27,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const found = users.find(user => user.username === username && user.password === password);
 
       if (found) {
+        sessionStorage.setItem("isLoggedIn", "true");
+        renderConfigWizard();  
         showMessage("loginMessage", "Login successful!");
         setTimeout(() => {
           sessionStorage.setItem("nextScreen", "configScreen");

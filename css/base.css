@@ -20,3 +20,19 @@ body {
     100% { background-position: 1000px 1000px; }
   }
   
+  .screen {
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+  }
+  
+  .screen.active {
+    opacity: 1;
+    pointer-events: all;
+    position: relative;
+  }
+  

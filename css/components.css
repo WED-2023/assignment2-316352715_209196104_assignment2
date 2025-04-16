@@ -114,7 +114,72 @@
     border-radius: 30px;
     box-shadow: none;
   }
+
+  #settingsButton {
+    position: fixed;
+    top: 140px;
+    left: 20px;
+    z-index: 9999;
   
+    background: transparent;
+    border: 2px solid #00c6ff;
+    color: #00c6ff;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 30px;
+    box-shadow: none;
+  }
+  dialog {
+    border: none;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 0 20px #00c6ff;
+    font-family: 'Orbitron', sans-serif;
+    background-color: #ffffff;
+    color: #333;
+    position: relative;
+  }
+  
+  dialog::backdrop {
+    background: rgba(0, 0, 0, 0.5);
+  }
+  
+  .close-x {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    line-height: 1;
+    color: #666;
+    transition: color 0.2s, transform 0.2s;
+  }
+  
+  .close-x:hover {
+    color: red;
+    transform: scale(1.2);
+  }
+  
+  
+  
+  
+  
+  #aboutButton {
+    position: fixed;
+    top: 80px;
+    left: 20px;
+    z-index: 9999;
+  
+    background: transparent;
+    border: 2px solid #00c6ff;
+    color: #00c6ff;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 30px;
+    box-shadow: none;
+  }
   
 
   #loginMessage {
@@ -138,5 +203,54 @@
   .visible {
     opacity: 1;
   }
+  
+  .config-container {
+    max-width: 500px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 0 20px #00c6ff;
+  }
+
+  .config-row {
+    margin: 1rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+  }
+  
+  .config-actions {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+  }
+
+  .secondary-btn {
+    all: unset; 
+    display: inline-block;
+    padding: 10px 20px;
+    border: 2px solid #00c6ff;
+    color: #00c6ff;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-family: 'Orbitron', sans-serif;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: transparent;
+    box-shadow: none;
+  }
+  
+  .secondary-btn:hover {
+    background-color: #00c6ff;
+    color: black;
+    box-shadow: 0 0 15px #00c6ff;
+  }
+  
+  
+  
   
   
