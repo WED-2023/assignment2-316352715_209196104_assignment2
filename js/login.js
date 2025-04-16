@@ -1,4 +1,6 @@
 import {showScreen} from "./game.js"
+import { showMessage } from "./utils.js";
+
 
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("loginForm");
@@ -17,17 +19,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const found = users.find(user => user.username === username && user.password === password);
 
-      console.log("Trying to login with:", username, password);
-      console.log("Users from storage:", users);
-
       if (found) {
-        sessionStorage.setItem("nextScreen", "configScreen");
-        showScreen("configScreen")
+        showMessage("loginMessage","Login successful!"); 
+        setTimeout(() => {
+          sessionStorage.setItem("nextScreen", "configScreen");
+          showScreen("configScreen");
+        }, 1500);
       } else {
-
-        console.log("Trying to login with:", username, password);
-        console.log("Users in localStorage:", users);
-        error.textContent = "Invalid username or password.";
+        showMessage("loginMessage","Login failed!","red");
       }
     });
   }

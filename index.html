@@ -19,9 +19,9 @@
         <h1 >Lioz Shor - 316352715</h1>
         <div id="button-container">
             <button id="registerBtn">Register</button> 
-            <button id="loginBtn">login</button>
+            <button id="loginBtn">Login</button>
+
         </div>
-        <h1>Rom & Lioz</h1>
     </div>
 
 
@@ -55,11 +55,13 @@
     
         <label for="confirm">Confirm Password:</label>
         <input type="password" id="registerConfirm" name="confirm" required>
-    
-        <button type="submit">Submit</button>
+        <p id="registerMessage" class="hidden"></p>
 
+        <button type="submit">Submit</button>
         <p id="registerError"></p>
-            <p id="error"></p>
+        <p id="error"></p>
+
+
           </form>
         </div>
         </div>
@@ -70,8 +72,6 @@
 
     </div>
     <div id="gameScreen" class="screen"></div>
-    <footer></footer>
-
 
 
     <div id="loginScreen" class="screen">
@@ -88,10 +88,11 @@
               <input type="checkbox" id="loginTogglePassword">
               <label for="loginTogglePassword">Show Password</label>
             </div>
-      
-            <p id="loginError" class="error"></p>
-      
+            <p id="loginMessage" class="hidden"></p>
+
             <button type="submit">Login</button>
+            <p id="loginError" class="error"></p>
+
           </form>
         </div>
     </div>
@@ -107,10 +108,14 @@
 
     <footer>  Made by Lioz Shor & Rom Sheynis | © 2025
     </footer>
+    <script type="module" src="js/game.js"></script>
+    <script type="module" src ="js/utils.js"></script>
     <script type="module" src="js/registerform.js"></script>
     <script type="module" src="js/login.js"></script>
-    <script src="js/game.js"></script>
-    <script src ="js/config.js"></script>
+    <script type="module" src ="js/config.js"></script>
+
+
+    <button id="mainMenuButton">Main Menu</button>
 
 
 </body>
