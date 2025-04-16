@@ -1,6 +1,5 @@
-import { renderConfigWizard } from './config.js';
+import { renderConfigWizard,resetGameConfig } from './config.js';
 import { initGame,stopGame } from './game.js'; 
-
 
 export function showScreen(screenId) {
   document.querySelectorAll('.screen').forEach(screen => {
@@ -28,6 +27,9 @@ export function showScreen(screenId) {
 
 
 window.addEventListener('DOMContentLoaded', () => {
+  window.addEventListener("beforeunload", () => {
+    resetGameConfig();
+  });  
   const defaultScreen = sessionStorage.getItem("nextScreen");
   if (defaultScreen === "configScreen") {
     renderConfigWizard();
@@ -98,6 +100,7 @@ window.addEventListener('DOMContentLoaded', () => {
     mainMenuBtn.addEventListener("click", () => {
       stopGame()
       sessionStorage.removeItem("isLoggedIn");
+      resetGameConfig();
       showScreen("homeScreen");
     });
   }
