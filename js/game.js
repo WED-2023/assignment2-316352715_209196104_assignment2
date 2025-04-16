@@ -676,3 +676,9 @@ function startTimer() {
     }
   }, 1000);
 }
+export function stopGame() {
+  gameOver = true; 
+  gameSong.pause(); 
+  gameSong.currentTime = 0; 
+}
+

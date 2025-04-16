@@ -1,5 +1,6 @@
 import { renderConfigWizard } from './config.js';
-import { initGame } from './game.js'; 
+import { initGame,stopGame } from './game.js'; 
+
 
 export function showScreen(screenId) {
   document.querySelectorAll('.screen').forEach(screen => {
@@ -95,6 +96,7 @@ window.addEventListener('DOMContentLoaded', () => {
   const mainMenuBtn = document.getElementById("mainMenuButton");
   if (mainMenuBtn) {
     mainMenuBtn.addEventListener("click", () => {
+      stopGame()
       sessionStorage.removeItem("isLoggedIn");
       showScreen("homeScreen");
     });
@@ -103,6 +105,7 @@ window.addEventListener('DOMContentLoaded', () => {
   const settingsBtn = document.getElementById("settingsButton");
   if (settingsBtn) {
     settingsBtn.addEventListener("click", () => {
+      stopGame()
       const loggedIn = sessionStorage.getItem("isLoggedIn") === "true";
       if (loggedIn) {
         renderConfigWizard();
