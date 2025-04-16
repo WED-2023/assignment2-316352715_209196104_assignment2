@@ -1,4 +1,6 @@
-let fireKey = null;
+import { initGame, currentFireKey } from './game.js';
+import { showScreen } from './welcome.js';
+let fireKey = null; 
 let gameDuration = null;
 document.addEventListener('DOMContentLoaded', () => {
   showFireKeyStep();
@@ -63,7 +65,7 @@ function showStartGameStep() {
 
   const startBtn = document.getElementById('startGameBtn');
   startBtn.addEventListener('click', () => {
-    // פה תעבור למשחק עם ההגדרות
+    
     showScreen('gameScreen');
     initGame({ fireKey, gameDuration });
   });

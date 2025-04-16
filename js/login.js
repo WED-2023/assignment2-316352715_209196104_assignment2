@@ -1,4 +1,4 @@
-import {showScreen} from "./game.js"
+import {showScreen} from "./welcome.js"
 
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("loginForm");

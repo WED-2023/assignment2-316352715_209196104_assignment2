@@ -1,4 +1,4 @@
-import {showScreen} from "./game.js"
+import {showScreen} from "./welcome.js"
 
 
 let users = JSON.parse(localStorage.getItem("users"));
@@ -70,7 +70,6 @@ document.getElementById("registerForm").addEventListener("submit", function(e) {
   
   // You can submit the form here (or send it with fetch)
   // e.target.submit();
-  showScreen("configScreen")
   const newUser = {username:userName,password}
   users.push(newUser);
   localStorage.setItem("users",JSON.stringify(users));
