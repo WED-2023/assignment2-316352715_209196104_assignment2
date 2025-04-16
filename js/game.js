@@ -100,10 +100,11 @@ export function initGame(settings) {
 // Key tracking
 const keys = {};
 document.addEventListener("keydown", e => {
-  keys[e.key] = true;
   if (e.code === currentFireKey) {
+    e.preventDefault(); 
     shoot();
   }
+  keys[e.key] = true;
 });
 document.addEventListener("keyup", e => delete keys[e.key]);
 
