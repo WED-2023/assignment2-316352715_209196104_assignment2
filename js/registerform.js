@@ -67,7 +67,7 @@ if (password !== confirmPassword) {
 }
 
 
-  // ✅ If all good:
+  // If all good:
 
   showMessage("registerMessage", "Registration succeeded!", "lime");
 

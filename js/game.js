@@ -1,5 +1,6 @@
+
 // ========================
-// Chicken Game with Shooting
+// Chicken Game with Shooting and Enemy Fire
 // ========================
 
 const canvas = document.getElementById("gameCanvas");
@@ -30,12 +31,18 @@ const hero = {
   speed: 5
 };
 
-// Bullets array and bullet settings
+// Bullets
 let bullets = [];
 const BULLET_SPEED = 8;
 const BULLET_RADIUS = 5;
 
-// Monsters grid settings
+// Enemy bullets
+let enemyBullets = [];
+const ENEMY_BULLET_SPEED = 4;
+const ENEMY_BULLET_RADIUS = 5;
+let lastEnemyShooterIndex = null;
+
+// Monsters
 const monsters = [];
 const rows = 4;
 const cols = 5;
@@ -57,7 +64,6 @@ for (let row = 0; row < rows; row++) {
   }
 }
 
-// Exported game start function
 export function initGame(settings) {
   const { fireKey, gameDuration } = settings;
   console.log("Game starting with:", fireKey, gameDuration);
@@ -66,12 +72,13 @@ export function initGame(settings) {
   gameTime = gameDuration * 60;
   gameOver = false;
   bullets = [];
+  enemyBullets = [];
   score = 0;
   startTimer();
   loop();
 }
 
-// Key press tracking
+// Key tracking
 const keys = {};
 document.addEventListener("keydown", e => {
   keys[e.key] = true;
@@ -81,7 +88,6 @@ document.addEventListener("keydown", e => {
 });
 document.addEventListener("keyup", e => delete keys[e.key]);
 
-// Shooting function
 function shoot() {
   if (gameOver) return;
   bullets.push({
@@ -92,20 +98,37 @@ function shoot() {
   });
 }
 
-// Main game update logic
+function enemyShoot() {
+  if (gameOver || monsters.length === 0) return;
+
+  if (enemyBullets.length > 0) {
+    const bullet = enemyBullets[enemyBullets.length - 1];
+    if (bullet.y < canvas.height * 0.75) return; // wait until bullet is 3/4 down
+  }
+
+  const randomIndex = Math.floor(Math.random() * monsters.length);
+  const shooter = monsters[randomIndex];
+  lastEnemyShooterIndex = randomIndex;
+
+  enemyBullets.push({
+    x: shooter.x + shooter.width / 2,
+    y: shooter.y + shooter.height,
+    radius: ENEMY_BULLET_RADIUS,
+    speed: ENEMY_BULLET_SPEED
+  });
+}
+
 function update() {
   if (gameOver) return;
 
   const bottomLimit = canvas.height;
   const topLimit = canvas.height * 0.6;
 
-  // Movement controls
   if (keys["ArrowUp"] && hero.y > topLimit) hero.y -= hero.speed;
   if (keys["ArrowDown"] && hero.y < bottomLimit - hero.height) hero.y += hero.speed;
   if (keys["ArrowLeft"] && hero.x > 0) hero.x -= hero.speed;
   if (keys["ArrowRight"] && hero.x < canvas.width - hero.width) hero.x += hero.speed;
 
-  // Move all monsters left/right
   let hitEdge = false;
   monsters.forEach(monster => {
     monster.x += monsterDirection * monsterSpeed;
@@ -115,10 +138,8 @@ function update() {
   });
   if (hitEdge) monsterDirection *= -1;
 
-  // Bullets movement and collision
   bullets.forEach((bullet, bIndex) => {
     bullet.y -= bullet.speed;
-
     if (bullet.y + bullet.radius < 0) {
       bullets.splice(bIndex, 1);
       return;
@@ -131,32 +152,32 @@ function update() {
 
       if (distance < monster.width / 2 + bullet.radius) {
         score++;
-        monsters[mIndex] = {
-          x: Math.random() * (canvas.width - 32),
-          y: Math.random() * (canvas.height * 0.5 - 32),
-          width: 32,
-          height: 32
-        };
+        monsters.splice(mIndex, 1);
         bullets.splice(bIndex, 1);
       }
     });
   });
 
-  // Collision with monsters
-  monsters.forEach(monster => {
-    const dx = (hero.x + hero.width / 2) - (monster.x + monster.width / 2);
-    const dy = (hero.y + hero.height / 2) - (monster.y + monster.height / 2);
+  enemyBullets.forEach((bullet, index) => {
+    bullet.y += bullet.speed;
+
+    if (bullet.y > canvas.height) {
+      enemyBullets.splice(index, 1);
+      return;
+    }
+
+    const dx = bullet.x - (hero.x + hero.width / 2);
+    const dy = bullet.y - (hero.y + hero.height / 2);
     const distance = Math.sqrt(dx * dx + dy * dy);
 
-    if (distance < 32) {
-      score++;
-      monster.x = Math.random() * (canvas.width - monster.width);
-      monster.y = Math.random() * (canvas.height * 0.5 - monster.height);
+    if (distance < hero.width / 2 + bullet.radius) {
+      gameOver = true;
     }
   });
+
+  enemyShoot();
 }
 
-// Drawing logic
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -172,9 +193,15 @@ function draw() {
     ctx.drawImage(heroImage, hero.x, hero.y, hero.width, hero.height);
   }
 
-  // Draw bullets
   ctx.fillStyle = "red";
   bullets.forEach(bullet => {
+    ctx.beginPath();
+    ctx.arc(bullet.x, bullet.y, bullet.radius, 0, Math.PI * 2);
+    ctx.fill();
+  });
+
+  ctx.fillStyle = "yellow";
+  enemyBullets.forEach(bullet => {
     ctx.beginPath();
     ctx.arc(bullet.x, bullet.y, bullet.radius, 0, Math.PI * 2);
     ctx.fill();
