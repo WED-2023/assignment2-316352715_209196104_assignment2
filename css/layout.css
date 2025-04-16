@@ -14,3 +14,26 @@
     display: block;
   }
   
+
+  .gameScreen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background: radial-gradient(circle, #001f3f 0%, #000000 100%);
+    border: 5px solid #00c6ff;
+    border-radius: 20px;
+    box-shadow:
+      0 0 20px #00c6ff,
+      0 0 40px #0072ff,
+      inset 0 0 20px rgba(0, 255, 255, 0.3);
+    width: fit-content;
+    margin: 2rem auto;
+  }
+  
+  #gameCanvas {
+    background-color: #111; /* כהה כדי שהציורים יבלטו */
+    border-radius: 12px;
+    image-rendering: pixelated; /* אופציונלי – לאפקט רטרו */
+  }
+  

@@ -311,6 +311,13 @@
       opacity: 0.6;
     }
   }
+
+  #gameCanvas {
+    background-color: #111;
+    border-radius: 12px;
+    image-rendering: pixelated;
+  }
+  
   
 
 
