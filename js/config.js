@@ -1,5 +1,5 @@
 import { initGame, currentFireKey } from './game.js';
-import { showScreen } from './welcome.js';
+import { showScreen } from './nav.js';
 let fireKey = null; 
 let gameDuration = null;
 document.addEventListener('DOMContentLoaded', () => {
