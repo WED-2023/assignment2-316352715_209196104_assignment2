@@ -21,11 +21,12 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log("Users from storage:", users);
 
       if (found) {
+        sessionStorage.setItem("nextScreen", "configScreen");
         showScreen("configScreen")
       } else {
+
         console.log("Trying to login with:", username, password);
         console.log("Users in localStorage:", users);
-
         error.textContent = "Invalid username or password.";
       }
     });
