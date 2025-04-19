@@ -1,6 +1,8 @@
 import { renderConfigWizard, resetGameConfig } from './config.js';
 import { initGame, stopGame } from './game.js';
 
+const startSound = new Audio("assets/sounds/startGame.wav");
+
 export function updateUserBadge(delay = 0) {
   const isLoggedIn = sessionStorage.getItem("isLoggedIn") === "true";
   const username = sessionStorage.getItem("username") || "Guest";
@@ -100,6 +102,7 @@ window.addEventListener('DOMContentLoaded', () => {
   const startBtn = document.getElementById("newGameButton");
   if (startBtn) {
     startBtn.addEventListener("click", () => {
+      startSound.play();
       const existingPanel = document.getElementById("highScoresBox");
       if (existingPanel) {
         existingPanel.classList.remove("visible");

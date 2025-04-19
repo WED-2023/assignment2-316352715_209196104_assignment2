@@ -1,5 +1,11 @@
 import { initGame } from './game.js';
 import { showScreen } from './nav.js';
+const successSound = new Audio("assets/sounds/savedSettings.wav");
+
+[successSound].forEach(snd => {
+  snd.volume = 0.5;
+});
+
 
 let fireKey = sessionStorage.getItem("fireKey") || null;
 let gameDuration = parseInt(sessionStorage.getItem("gameDuration")) || 2;
@@ -71,6 +77,7 @@ export function renderConfigWizard() {
 
   function showSaved() {
     msg.classList.remove("hidden");
+    successSound.play();
     setTimeout(() => msg.classList.add("hidden"), 2000);
   }
 

@@ -4,6 +4,7 @@ canvas.width = Math.min(window.innerWidth * 0.7, 720);  // לדוגמה: 70% מ�
 canvas.height = canvas.width * 0.75; // יחס 4:3
 const ctx = canvas.getContext("2d");
 
+
 export let currentFireKey = null;
 let remainingTime = 30;
 let gameOver = false;
