@@ -17,8 +17,21 @@ export function renderConfigWizard() {
   const fireKeyBtn = wrapper.querySelector("#setFireKeyBtn");
   const durationInput = wrapper.querySelector("#gameDurationInput");
   const saveBtn = wrapper.querySelector("#saveSettingsBtn");
-  // const startBtn = wrapper.querySelector("#startGameBtn");
-  const msg = wrapper.querySelector("#configSavedMessage");
+  const viewScoresBtn = wrapper.querySelector("#viewScoresBtn");
+  if (viewScoresBtn) {
+    viewScoresBtn.addEventListener("click", () => {
+      const username = sessionStorage.getItem("username") || "Guest";
+      const key = `scores_${username}`;
+      const scores = JSON.parse(localStorage.getItem(key)) || [];
+      if (scores.length > 0) {
+        const rank = scores.indexOf(scores[0]) + 1;
+        showScoresTable(scores, rank);
+      } else {
+        alert("No scores yet!");
+      }
+    });
+  }
+    const msg = wrapper.querySelector("#configSavedMessage");
 
   fireKeyDisplay.textContent = fireKey || "Not set";
   durationInput.value = gameDuration;
@@ -29,7 +42,7 @@ export function renderConfigWizard() {
     setTimeout(() => {
       window.addEventListener("keydown", function handler(e) {
         fireKey = e.code;
-        const displayName = getReadableKeyName(e.code);
+        const displayName = getReadableKeyName(e.code, e.key);
         fireKeyDisplay.textContent = displayName;
         sessionStorage.setItem("fireKey", fireKey);
         window.removeEventListener("keydown", handler);
@@ -38,12 +51,11 @@ export function renderConfigWizard() {
     }, 50);
   });
 
-  function getReadableKeyName(code) {
+  function getReadableKeyName(code, key) {
     if (code === "Space") return "Spacebar";
-    if (code.startsWith("Key")) return code.replace("Key", "");
-    if (code.startsWith("Digit")) return code.replace("Digit", "");
-    return code;
+    return key.toUpperCase(); // מראה רק את האות עצמה
   }
+  
 
   saveBtn.addEventListener("click", () => {
     const val = parseInt(durationInput.value);

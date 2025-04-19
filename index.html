@@ -12,7 +12,13 @@
 
     
 </head>
-<body>
+<body>        
+  <div id="highScoresBox" class="high-scores hidden">
+  <h3>🏆 Your High Scores</h3>
+      <ol id="scoreList"></ol>
+    </div>
+
+
     <div id="homeScreen" class="screen">
         <img id="logo" src="assets/images/logo.png" alt="">
         <h1 >Rom Sheynis - 209196104</h1>
@@ -71,13 +77,11 @@
 
         <div id="gameScreen" class="screen">
           <div id="gameWrapper">
-            <canvas id="gameCanvas" width="1000" height="800"></canvas> 
-            <div id="highScoresBox">
-              <h3>🏆 Your High Scores</h3>
-              <ol id="scoreList"></ol>
-            </div>
+            <canvas id="gameCanvas"></canvas>
           </div>
         </div>
+
+        
 
 
     <template id="configFormTemplate">
@@ -129,8 +133,6 @@
     </div>
 
     </div>
-
-    <button id="aboutButton">About</button>
     <dialog id="myAboutModal">
       <button id="closeAboutModal" class="close-x" aria-label="Close">
         <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" fill="none" stroke-width="2">
@@ -154,35 +156,12 @@
     <script type="module" src="js/nav.js"></script>
     <script type="module" src ="js/config.js"></script>
 
-    <button id="mainMenuButton" class="side-button" style="top: 20px;">Main Menu</button>
-    <button id="aboutButton" class="side-button" style="top: 80px;">About</button>
-    <button id="settingsButton" class="side-button" style="top: 140px;">Settings</button>    
-    <button id="newGameButton" class="arcade-button">NEW GAME</button>
+    <button id="mainMenuButton" class="left-side-button" style="top: 20px;">Main Menu</button>
+    <button id="aboutButton" class="left-side-button" style="top: 80px;">About</button>
+    <button id="settingsButton" class="left-side-button" style="top: 140px;">Settings</button>   
+    <button id="viewHighScores" class="right-side-button" style="top: 20px;">🏆 High Scores</button>
+         <button id="newGameButton" class="arcade-button">NEW GAME</button>
 
-
-    <template id="configFormTemplate">
-      <div class="config-container">
-        <h1>Game Configuration</h1>
-    
-        <div class="config-row">
-          <label>Fire Key:</label>
-          <span id="currentFireKey">Not set</span>
-          <button id="setFireKeyBtn" class="secondary-btn">Change</button>
-        </div>
-    
-        <div class="config-row">
-          <label for="gameDurationInput">Game Duration (minutes):</label>
-          <input type="number" id="gameDurationInput" min="2" value="2" />
-        </div>
-    
-        <div class="config-actions">
-          <button id="saveSettingsBtn">Save Settings</button>
-        </div>
-    
-        <p id="configSavedMessage" class="hidden">Settings saved ✅</p>
-      </div>
-    </template>
-    
 
 </body>
 </html>

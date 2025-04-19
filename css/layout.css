@@ -1,4 +1,3 @@
-/* כפתורי ניווט קבועים בצד */
 #mainMenuButton,
 #aboutButton,
 #settingsButton {
@@ -40,7 +39,6 @@
   display: flex;
 }
 
-/* מסך משחק עם מסגרת מגניבה */
 .gameScreen {
   background: radial-gradient(circle, #001f3f 0%, #000000 100%);
   border: 5px solid #00c6ff;
