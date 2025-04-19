@@ -33,8 +33,8 @@ export function renderConfigWizard() {
   }
     const msg = wrapper.querySelector("#configSavedMessage");
 
-  fireKeyDisplay.textContent = fireKey || "Not set";
-  durationInput.value = gameDuration;
+    fireKeyDisplay.textContent = fireKey ? getReadableKeyName(fireKey, fireKey.replace("Key", "")) : "Not set";
+    durationInput.value = gameDuration;
 
   fireKeyBtn.addEventListener("click", () => {
     fireKeyDisplay.textContent = "Waiting for key press...";
@@ -46,7 +46,6 @@ export function renderConfigWizard() {
         fireKeyDisplay.textContent = displayName;
         sessionStorage.setItem("fireKey", fireKey);
         window.removeEventListener("keydown", handler);
-        showSaved();
       });
     }, 50);
   });
@@ -68,14 +67,7 @@ export function renderConfigWizard() {
     }
   });
 
-  // startBtn.addEventListener("click", () => {
-  //   if (!fireKey || !gameDuration) {
-  //     alert("Please complete all settings before starting.");
-  //     return;
-  //   }
-  //   showScreen("gameScreen");
-  //   initGame({ fireKey, gameDuration });
-  // });
+
 
   function showSaved() {
     msg.classList.remove("hidden");
@@ -88,7 +80,6 @@ export function renderConfigWizard() {
 export function resetGameConfig() {
   sessionStorage.removeItem("fireKey");
   sessionStorage.removeItem("gameDuration");
-  console.log("Game configuration has been reset.");
   return { fireKey: null, gameDuration: null };
 }
 

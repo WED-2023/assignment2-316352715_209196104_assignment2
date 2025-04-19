@@ -1,6 +1,7 @@
-import { showScreen } from "./nav.js";
 import { showMessage } from "./utils.js";
 import { renderConfigWizard } from "./config.js";
+import { showScreen, updateUserBadge } from "./nav.js";
+
 
 
 
@@ -46,7 +47,9 @@ document.addEventListener("DOMContentLoaded", () => {
         setTimeout(() => {
           sessionStorage.setItem("nextScreen", "configScreen");
           showScreen("configScreen");
+          updateUserBadge(0); 
         }, 1500);
+        
       } else {
         showMessage("loginMessage", "Login failed!", "red");
       }

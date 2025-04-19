@@ -363,11 +363,9 @@ export function showScoresTable(scores, rank) {
 
 
 function loop() {
-  console.log("🌀 loop is running | gameOver:", gameOver, "| gameLoopRunning:", gameLoopRunning);
   if (!gameLoopRunning) return;
   update();
   draw();
-  console.log("🐔 monsterSpeed:", monsterSpeed, "| 🔫 bulletSpeed:", ENEMY_BULLET_SPEED);
   if (!gameOver) requestAnimationFrame(loop);
 }
 

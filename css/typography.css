@@ -11,3 +11,35 @@
     text-shadow: 0 0 20px #ffd700;
   }
   
+
+  @keyframes flicker {
+    0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+      opacity: 1;
+    }
+    20%, 22%, 24%, 55% {
+      opacity: 0.4;
+    }
+  }
+  
+  .user-badge {
+    position: fixed;
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Courier New', monospace;
+    font-size: 20px;
+    color: #00ffff;
+    text-shadow: 0 0 5px #0ff, 0 0 10px #0ff;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 10px 20px;
+    border: 2px solid #00ffff;
+    border-radius: 15px;
+    animation: flicker 1.5s infinite alternate;
+    z-index: 9999;
+    white-space: nowrap;
+  }
+  
+
+  .user-badge:empty {
+    display: none;
+  }

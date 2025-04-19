@@ -1,16 +1,54 @@
-import { renderConfigWizard,resetGameConfig } from './config.js';
-import { initGame,stopGame } from './game.js'; 
+import { renderConfigWizard, resetGameConfig } from './config.js';
+import { initGame, stopGame } from './game.js';
+
+export function updateUserBadge(delay = 0) {
+  const isLoggedIn = sessionStorage.getItem("isLoggedIn") === "true";
+  const username = sessionStorage.getItem("username") || "Guest";
+  const badge = document.getElementById("userBadge");
+
+  if (!badge) return;
+
+  if (isLoggedIn) {
+    const message = `🕹️ Welcome, Commander ${username}`;
+    let i = 0;
+
+    setTimeout(() => {
+      function typeEffect() {
+        if (i <= message.length) {
+          badge.textContent = message.substring(0, i) + "_";
+          i++;
+          setTimeout(typeEffect, 60);
+        } else {
+          badge.textContent = message;
+        }
+      }
+
+      badge.style.display = "block";
+      typeEffect();
+    }, delay);
+  } else {
+    badge.textContent = "";
+    badge.style.display = "none";
+  }
+  setTimeout(() => {
+    badge.style.display = "none";
+  }, 6000); 
+  
+}
+
+
 
 export function showScreen(screenId) {
   document.querySelectorAll('.screen').forEach(screen => {
     screen.classList.remove('active');
   });
+
   const scoresPanel = document.getElementById("highScoresBox");
   if (scoresPanel) {
     scoresPanel.classList.remove("visible");
     scoresPanel.classList.add("hidden");
-    }
-  
+  }
+
   const targetScreen = document.getElementById(screenId);
   if (targetScreen) {
     setTimeout(() => {
@@ -18,7 +56,6 @@ export function showScreen(screenId) {
     }, 50);
   }
 
-  
   const topRightBtn = document.getElementById("viewHighScores");
   if (topRightBtn) {
     topRightBtn.classList.toggle("hidden", screenId !== "configScreen");
@@ -35,21 +72,23 @@ export function showScreen(screenId) {
     }
   }
 
-
   const newGameBtn = document.getElementById("newGameButton");
   if (newGameBtn) {
     const showForScreens = ["configScreen", "gameScreen"];
     newGameBtn.style.display = showForScreens.includes(screenId) ? "block" : "none";
   }
-  
 }
 
 
 
 window.addEventListener('DOMContentLoaded', () => {
   window.addEventListener("beforeunload", () => {
+    sessionStorage.removeItem("isLoggedIn");
     resetGameConfig();
-  });  
+  });
+
+  
+
   const defaultScreen = sessionStorage.getItem("nextScreen");
   if (defaultScreen === "configScreen") {
     renderConfigWizard();
@@ -57,34 +96,35 @@ window.addEventListener('DOMContentLoaded', () => {
   showScreen(defaultScreen || "homeScreen");
   sessionStorage.removeItem("nextScreen");
 
+  // new game button
   const startBtn = document.getElementById("newGameButton");
-  if (startBtn) {startBtn.addEventListener("click", () => {
-    // 🧽 הסתרת טבלת השיאים הקודמת (אם קיימת)
-    const existingPanel = document.getElementById("highScoresBox");
-    if (existingPanel) {
-      existingPanel.classList.remove("visible");
-      existingPanel.classList.add("hidden");
-          }
-  
-    const fireKey = sessionStorage.getItem("fireKey");
-    const gameDuration = parseInt(sessionStorage.getItem("gameDuration"));
-  
-    if (!fireKey || isNaN(gameDuration)) {
-      alert("Please configure the game before starting.");
-      showScreen("configScreen");
-      return;
-    }
-  
-    stopGame(); 
-    showScreen("gameScreen");
-  
-    setTimeout(() => {
-      initGame({ fireKey, gameDuration });
-    }, 100);
-  });
-  
+  if (startBtn) {
+    startBtn.addEventListener("click", () => {
+      const existingPanel = document.getElementById("highScoresBox");
+      if (existingPanel) {
+        existingPanel.classList.remove("visible");
+        existingPanel.classList.add("hidden");
+      }
+
+      const fireKey = sessionStorage.getItem("fireKey");
+      const gameDuration = parseInt(sessionStorage.getItem("gameDuration"));
+
+      if (!fireKey || isNaN(gameDuration)) {
+        alert("Please configure the game before starting.");
+        showScreen("configScreen");
+        return;
+      }
+
+      stopGame();
+      showScreen("gameScreen");
+
+      setTimeout(() => {
+        initGame({ fireKey, gameDuration });
+      }, 100);
+    });
   }
 
+  // about modal
   const dialog = document.getElementById("myAboutModal");
   const openBtn = document.getElementById("aboutButton");
   const closeBtn = document.getElementById("closeAboutModal");
@@ -112,6 +152,7 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // sign up button
   const regBtn = document.getElementById('registerBtn');
   if (regBtn) {
     regBtn.addEventListener('click', () => {
@@ -119,6 +160,7 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // login button
   const logBtn = document.getElementById('loginBtn');
   if (logBtn) {
     logBtn.addEventListener('click', () => {
@@ -126,20 +168,22 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // main menu button
   const mainMenuBtn = document.getElementById("mainMenuButton");
   if (mainMenuBtn) {
     mainMenuBtn.addEventListener("click", () => {
-      stopGame()
+      stopGame();
       sessionStorage.removeItem("isLoggedIn");
       resetGameConfig();
       showScreen("homeScreen");
     });
   }
 
+  // settings button
   const settingsBtn = document.getElementById("settingsButton");
   if (settingsBtn) {
     settingsBtn.addEventListener("click", () => {
-      stopGame()
+      stopGame();
       const loggedIn = sessionStorage.getItem("isLoggedIn") === "true";
       if (loggedIn) {
         renderConfigWizard();
@@ -149,19 +193,21 @@ window.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+
+//high scores button
   const showScoresBtn = document.getElementById("viewHighScores");
   if (showScoresBtn) {
     showScoresBtn.addEventListener("click", () => {
       const username = sessionStorage.getItem("username") || "Guest";
       const key = `scores_${username}`;
       const scores = JSON.parse(localStorage.getItem(key)) || [];
-  
+
       if (scores.length > 0) {
         const rank = scores.indexOf(scores[0]) + 1;
-  
+
         import("./game.js").then(module => {
           module.showScoresTable(scores, rank);
-  
+
           setTimeout(() => {
             const panel = document.getElementById("highScoresBox");
             if (panel) {
@@ -174,6 +220,6 @@ window.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
-  
+
 
 });
