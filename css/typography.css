@@ -43,3 +43,9 @@
   .user-badge:empty {
     display: none;
   }
+
+  .user-badge:hover::after {
+    content: "🛸";
+    margin-left: 10px;
+  }
+  

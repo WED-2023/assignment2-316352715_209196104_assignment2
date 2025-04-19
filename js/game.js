@@ -98,6 +98,7 @@ function initMonsters() {
 }
 
 
+
 export function initGame(settings) {
   gameSong.currentTime = 0;
   gameSong.play();

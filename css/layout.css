@@ -60,3 +60,19 @@
   margin-top: 30px;
 }
 
+
+#gameStartOverlay {
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Press Start 2P', monospace;
+  font-size: 32px;
+  color: yellow;
+  text-shadow: 0 0 20px red;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 9999;
+}
+
+
