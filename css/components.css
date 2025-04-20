@@ -245,6 +245,22 @@
     transform: scale(1.2);
   }
   
+  .scrollable-dialog-form {
+    max-width: 400px;
+    max-height: 80vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Orbitron', sans-serif;
+  }
+  
+  .scrollable-content {
+    overflow-y: auto;
+    flex-grow: 1;
+    padding-right: 4px; 
+    margin-bottom: 1rem;
+  }
+  
   
   
   

@@ -150,12 +150,59 @@
           <line x1="6" y1="6" x2="18" y2="18" />
         </svg>
       </button>
-            <form method="dialog">
-        <h2>About This Game</h2>
-        <p>This game was created by Lioz and Rom 🐔🛸</p>
-        <button>OK</button>
+    
+      <form method="dialog" class="scrollable-dialog-form">
+        <h2>About Chicken Spaceship</h2>
+        <div class="scrollable-content">
+
+    
+        <p>
+          <strong>Chicken Spaceship</strong> is a retro-style space shooter built entirely with HTML, CSS, and vanilla JavaScript using the native <code>&lt;dialog&gt;</code> element.
+        </p>
+    
+        <section>
+          <h3>🎮 Game Features</h3>
+          <ul>
+            <li>Move with arrow keys</li>
+            <li>Customizable fire key</li>
+            <li>Lives and scoring system</li>
+            <li>Victory and game-over conditions</li>
+            <li>High score saving per user - reset when another user login</li>
+          </ul>
+        </section>
+    
+        <section>
+          <h3>🔊 Sound & Music</h3>
+          <ul>
+            <li>Ambient and battle music</li>
+            <li>Sound effects for shots, actions and game states</li>
+            <li>Global mute toggle</li>
+          </ul>
+        </section>
+    
+        <section>
+          <h3>⚙️ Technical Details</h3>
+          <ul>
+            <li>Canvas-based rendering engine</li>
+            <li>Compressed images and audio for fast loading</li>
+            <li>May load slowly on first load due to GitHub hosting</li>
+          </ul>
+        </section>
+  
+    
+        <section>
+          <h3>👨‍🚀 Created By</h3>
+          <p>Rom Sheynis & Lioz Shor</p>
+        </section>
+      </div> <!-- ⬅️ סוגר את scrollable-content -->
+
+    
+        <div style="text-align: center; margin-top: 1em;">
+          <button>OK</button>
+        </div>
       </form>
     </dialog>
+    
     
 
     <script type="module" src="js/game.js"></script>

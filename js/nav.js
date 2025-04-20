@@ -1,6 +1,8 @@
 import { renderConfigWizard, resetGameConfig } from './config.js';
 import { initGame, stopGame } from './game.js';
 
+window.globalVolume = 0.5; 
+
 const startSound = new Audio("assets/sounds/StartGame.mp3");
 const ambientMusic = new Audio("assets/sounds/arcade-party-173553-compressed.mp3");
 ambientMusic.loop = true;
