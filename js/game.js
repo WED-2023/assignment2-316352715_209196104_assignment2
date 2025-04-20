@@ -387,17 +387,36 @@ const gameOverSong = new Audio("assets/sounds/game-over-arcade-6435.mp3");
 const gameWinSong = new Audio("assets/sounds/gameWon.mp3");
 const enemyShootMp3 = new Audio("assets/sounds/enemyShot.mp3");
 const heroShootMp3 = new Audio("assets/sounds/heroShot.mp3");
+<<<<<<< Updated upstream
 
 // Hero object (the chicken)
+=======
+const heroShootPool = [];
+
+[gameSong, gameOverSong, gameWinSong, enemyShootMp3].forEach(sound => {
+  sound.muted = window.isMuted;
+});
+
+export function applyMuteSetting() {
+  [gameSong, gameOverSong, gameWinSong, enemyShootMp3, heroShootMp3].forEach(sound => {
+    sound.muted = window.isMuted;
+  });
+}
+const initXpoint =  Math.random() * (canvas.width - 32)
+>>>>>>> Stashed changes
 const hero = {
-  x: 100,
-  y: canvas.height * 0.7,
+  x:initXpoint,
+  y: canvas.height -32,
   width: 32,
   height: 32,
   speed: 5
 };
 
+<<<<<<< Updated upstream
 // Bullets
+=======
+
+>>>>>>> Stashed changes
 let bullets = [];
 const BULLET_SPEED = 8;
 const BULLET_RADIUS = 5;
@@ -491,6 +510,7 @@ function enemyShoot() {
   const randomIndex = Math.floor(Math.random() * monsters.length);
   const shooter = monsters[randomIndex];
   lastEnemyShooterIndex = randomIndex;
+<<<<<<< Updated upstream
   enemyBullets.push({
     x: shooter.x + shooter.width / 2,
     y: shooter.y + shooter.height,
@@ -498,6 +518,35 @@ function enemyShoot() {
     speed: ENEMY_BULLET_SPEED
   });
   enemyShootMp3.play();
+=======
+
+  // enemyBullets.push({
+  //   x: shooter.x + shooter.width / 2,
+  //   y: shooter.y + shooter.height,
+  //   radius: ENEMY_BULLET_RADIUS,
+  //   speed: ENEMY_BULLET_SPEED
+  // });
+const dx = hero.x + hero.width / 2 - (shooter.x + shooter.width / 2);
+const dy = hero.y + hero.height / 2 - (shooter.y + shooter.height / 2);
+const distance = Math.sqrt(dx * dx + dy * dy);
+const unitX = dx / distance;
+const unitY = dy / distance;
+
+enemyBullets.push({
+  x: shooter.x + shooter.width / 2,
+  y: shooter.y + shooter.height / 2,
+  radius: ENEMY_BULLET_RADIUS,
+  speedX: unitX * ENEMY_BULLET_SPEED,
+  speedY: unitY * ENEMY_BULLET_SPEED
+});
+
+
+  if (!window.isMuted) {
+    const sound = enemyShootMp3.cloneNode();
+    sound.volume = 0.; 
+    sound.play();
+  }
+>>>>>>> Stashed changes
 }
 
 function update() {
@@ -549,8 +598,14 @@ function update() {
   });
 
   enemyBullets.forEach((bullet, index) => {
-    bullet.y += bullet.speed;
-    if (bullet.y > canvas.height) {
+    // bullet.y += bullet.speed;
+    bullet.x += bullet.speedX;
+    bullet.y += bullet.speedY;
+
+    if (
+      bullet.y > canvas.height || bullet.y < 0 ||
+      bullet.x > canvas.width || bullet.x < 0
+    ) {
       enemyBullets.splice(index, 1);
       return;
     }
@@ -560,6 +615,8 @@ function update() {
     if (distance < hero.width / 2 + bullet.radius) {
       enemyBullets.splice(index, 1);
       heroLives--;
+      hero.x = initXpoint    //respawn at intial point of the game
+      hero.y = canvas.height- hero.width
       if (heroLives === 0) {
         gameOver = true;
       }
@@ -605,11 +662,43 @@ function draw() {
         showScoresTable(scores, rank);
       }, 3000);
     }
+<<<<<<< Updated upstream
     if (gameWon) {
       gameWinSong.play();
       ctx.fillStyle = "white";
       ctx.font = "40px Arial";
       ctx.fillText("Congrats you won!!!", canvas.width / 2 - 120, canvas.height / 2);
+=======
+  
+    isCanDoBetter = false;
+    isWinner = false;
+    isLoser = false;
+  
+    if (!isChampion && timeUp) {
+      if (score >= 100) isWinner = true;
+      else isCanDoBetter = true;
+    }
+  
+    
+    ctx.fillStyle = "rgba(0, 0, 0, 0.7)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+  
+    let message = "Game Over";
+    let color = "white";
+  
+    if (isChampion) {
+      message = "👑 Champion!";
+      color = "#00ffcc";
+      if (!window.isMuted) gameWinSong.play();
+    } else if (isWinner) {
+      message = "🏆 Winner!";
+      color = "#33ff33";
+      if (!window.isMuted) gameWinSong.play();
+    } else if (isCanDoBetter) {
+      message = "😐 You Can Do Better!";
+      color = "#ffff66";
+      if (!window.isMuted) gameOverSong.play();
+>>>>>>> Stashed changes
     } else {
       gameOverSong.play();
       ctx.fillStyle = "white";
@@ -625,6 +714,11 @@ function saveScore() {
   let scores = JSON.parse(localStorage.getItem(key)) || [];
   scores.push(score);
   scores.sort((a, b) => b - a);
+<<<<<<< Updated upstream
+=======
+  scores = scores.slice(0, 10); 
+
+>>>>>>> Stashed changes
   localStorage.setItem(key, JSON.stringify(scores));
   return { scores, rank: scores.indexOf(score) + 1 };
 }
@@ -669,4 +763,8 @@ export function stopGame() {
   gameSong.pause();
   gameSong.currentTime = 0;
   clearInterval(speedInterval);
+<<<<<<< Updated upstream
+=======
+  clearInterval(timerInterval); 
+>>>>>>> Stashed changes
 }
