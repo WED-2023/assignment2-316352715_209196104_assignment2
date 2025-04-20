@@ -604,4 +604,30 @@
   @keyframes spin {
     to { transform: rotate(360deg); }
   }
+
+  #progressWrapper {
+    width: 300px;
+    height: 20px;
+    background-color: #111;
+    border: 2px solid #00c6ff;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 20px;
+  }
+  
+  #progressBar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #00ffff, #0072ff);
+    box-shadow: 0 0 10px #00ffff;
+    transition: width 0.2s ease;
+  }
+  
+  #loadingPercent {
+    margin-top: 10px;
+    font-family: 'Orbitron', sans-serif;
+    color: #00ffff;
+    font-size: 1rem;
+  }
+  
   

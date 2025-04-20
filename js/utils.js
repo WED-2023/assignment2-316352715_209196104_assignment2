@@ -43,15 +43,23 @@ export function preloadAssets(onDone) {
     "assets/sounds/heroShot.mp3",
     "assets/sounds/savedSettings.wav",
     "assets/sounds/StartGame.wav"
-    
   ];
 
   let loaded = 0;
   const total = images.length + sounds.length;
 
+  const progressBar = document.getElementById("progressBar");
+  const loadingPercent = document.getElementById("loadingPercent");
+
   function checkDone() {
     loaded++;
-    if (loaded === total) onDone();
+    const percent = Math.round((loaded / total) * 100);
+    if (progressBar) progressBar.style.width = percent + "%";
+    if (loadingPercent) loadingPercent.textContent = percent + "%";
+
+    if (loaded === total) {
+      setTimeout(() => onDone(), 300); // השהייה קלה לסיום נעים
+    }
   }
 
   images.forEach(src => {
@@ -68,4 +76,3 @@ export function preloadAssets(onDone) {
     audio.src = src;
   });
 }
-

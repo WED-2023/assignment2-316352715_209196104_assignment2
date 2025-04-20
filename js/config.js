@@ -39,8 +39,14 @@ export function renderConfigWizard() {
   }
     const msg = wrapper.querySelector("#configSavedMessage");
 
-    fireKeyDisplay.textContent = fireKey ? getReadableKeyName(fireKey, fireKey.replace("Key", "")) : "Not set";
-    durationInput.value = gameDuration;
+    if (sessionStorage.getItem("fireKey")) {
+      fireKey = sessionStorage.getItem("fireKey");
+      fireKeyDisplay.textContent = getReadableKeyName(fireKey, fireKey.replace("Key", ""));
+    } else {
+      fireKey = null;
+      fireKeyDisplay.textContent = "Not set";
+    }
+        durationInput.value = gameDuration;
 
   fireKeyBtn.addEventListener("click", () => {
     fireKeyDisplay.textContent = "Waiting for key press...";
