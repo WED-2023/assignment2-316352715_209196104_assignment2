@@ -28,16 +28,16 @@ let timerInterval = null;
 
 // Load images
 const bgImage = new Image();
-bgImage.src = "assets/images/bg.png";
+bgImage.src = "assets/images/bg.webp";
 
 const heroImage = new Image();
-heroImage.src = "assets/images/chicken.png";
+heroImage.src = "assets/images/chicken.webp";
 
 const monsterImage = new Image();
-monsterImage.src = "assets/images/kfc.png";
+monsterImage.src = "assets/images/kfc.webp";
 
 const heartImage = new Image();
-heartImage.src = "assets/images/heart.png";
+heartImage.src = "assets/images/heart.webp";
 
 //Load sounds
 const gameSong = new Audio("assets/sounds/gameSong.mp3");

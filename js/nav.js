@@ -1,7 +1,7 @@
 import { renderConfigWizard, resetGameConfig } from './config.js';
 import { initGame, stopGame } from './game.js';
 
-const startSound = new Audio("assets/sounds/StartGame.wav");
+const startSound = new Audio("assets/sounds/StartGame.mp3");
 
 export function updateUserBadge(delay = 0) {
   const isLoggedIn = sessionStorage.getItem("isLoggedIn") === "true";

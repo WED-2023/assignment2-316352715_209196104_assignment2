@@ -12,7 +12,7 @@ export function showMessage(id, msg, color = "lime") {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  const clickSound = new Audio("assets/sounds/click.wav");
+  const clickSound = new Audio("assets/sounds/click.mp3");
   clickSound.volume = 0.5;
 
   document.querySelectorAll("button").forEach(btn => {
@@ -27,22 +27,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
 export function preloadAssets(onDone) {
   const images = [
-    "assets/images/bg.png",
-    "assets/images/chicken.png",
-    "assets/images/heart.png",
-    "assets/images/kfc.png",
-    "assets/images/logo.png"
+    "assets/images/bg.webp",
+    "assets/images/chicken.webp",
+    "assets/images/heart.webp",
+    "assets/images/kfc.webp",
+    "assets/images/logo.webp"
   ];
 
   const sounds = [
-    "assets/sounds/click.wav",
+    "assets/sounds/click.mp3",
     "assets/sounds/enemyShot.mp3",
     "assets/sounds/game-over-arcade-6435.mp3",
     "assets/sounds/gameSong.mp3",
     "assets/sounds/gameWon.mp3",
     "assets/sounds/heroShot.mp3",
-    "assets/sounds/savedSettings.wav",
-    "assets/sounds/StartGame.wav"
+    "assets/sounds/savedSettings.mp3",
+    "assets/sounds/StartGame.mp3"
   ];
 
   let loaded = 0;

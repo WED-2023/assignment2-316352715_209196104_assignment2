@@ -1,6 +1,6 @@
 import { initGame } from './game.js';
 import { showScreen } from './nav.js';
-const successSound = new Audio("assets/sounds/savedSettings.wav");
+const successSound = new Audio("assets/sounds/savedSettings.mp3");
 
 [successSound].forEach(snd => {
   snd.volume = 0.5;
