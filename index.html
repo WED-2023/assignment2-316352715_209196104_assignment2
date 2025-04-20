@@ -13,7 +13,11 @@
     
 </head>
 <body> 
-
+  <div id="loadingScreen">
+    <h2>🛸 Loading Game...</h2>
+    <div class="loading-spinner"></div>
+  </div>
+  
   <div id="userBadge" class="user-badge"></div>       
   <div id="highScoresBox" class="high-scores hidden">
   <h3>🏆 Your High Scores</h3>
@@ -163,7 +167,16 @@
     <button id="settingsButton" class="left-side-button" style="top: 140px;">Settings</button>   
     <button id="viewHighScores" class="right-side-button" style="top: 20px;">🏆 High Scores</button>
          <button id="newGameButton" class="arcade-button">NEW GAME</button>
-
+         <script type="module">
+          import { preloadAssets } from './js/utils.js';
+          import { showScreen } from './js/nav.js'; 
+      
+          preloadAssets(() => {
+            document.getElementById("loadingScreen").style.display = "none";
+            showScreen("homeScreen"); 
+          });
+        </script>
+      
 
 </body>
 </html>

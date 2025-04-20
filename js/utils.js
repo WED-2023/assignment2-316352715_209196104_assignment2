@@ -24,3 +24,47 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
+
+export function preloadAssets(onDone) {
+  const images = [
+    "assets/images/bg.png",
+    "assets/images/chicken.png",
+    "assets/images/heart.png",
+    "assets/images/kfc.png",
+    "assets/images/logo.png"
+  ];
+
+  const sounds = [
+    "assets/sounds/click.wav",
+    "assets/sounds/enemyShot.mp3",
+    "assets/sounds/game-over-arcade-6435.mp3",
+    "assets/sounds/gameSong.mp3",
+    "assets/sounds/gameWon.mp3",
+    "assets/sounds/heroShot.mp3",
+    "assets/sounds/savedSettings.wav",
+    "assets/sounds/StartGame.wav"
+  ];
+
+  let loaded = 0;
+  const total = images.length + sounds.length;
+
+  function checkDone() {
+    loaded++;
+    if (loaded === total) onDone();
+  }
+
+  images.forEach(src => {
+    const img = new Image();
+    img.onload = checkDone;
+    img.onerror = checkDone;
+    img.src = src;
+  });
+
+  sounds.forEach(src => {
+    const audio = new Audio();
+    audio.oncanplaythrough = checkDone;
+    audio.onerror = checkDone;
+    audio.src = src;
+  });
+}
+
