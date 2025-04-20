@@ -629,5 +629,33 @@
     color: #00ffff;
     font-size: 1rem;
   }
+  .mute-btn {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    width: 38px;
+    height: 38px;
+    font-size: 18px;
+    line-height: 1;
+    border: 2px solid #00c6ff;
+    border-radius: 50%;
+    background: black;
+    color: #00c6ff;
+    cursor: pointer;
+    z-index: 9999;
+    box-shadow: 0 0 8px #00c6ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: all 0.3s ease;
+  }
+  
+  .mute-btn:hover {
+    transform: scale(1.1);
+    background-color: #00c6ff;
+    color: black;
+  }
+  
   
   

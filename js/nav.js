@@ -2,6 +2,10 @@ import { renderConfigWizard, resetGameConfig } from './config.js';
 import { initGame, stopGame } from './game.js';
 
 const startSound = new Audio("assets/sounds/StartGame.mp3");
+const ambientMusic = new Audio("assets/sounds/arcade-party-173553-compressed.mp3");
+ambientMusic.loop = true;
+ambientMusic.volume = 0.2;
+window.isMuted = false;
 
 export function updateUserBadge(delay = 0) {
   const isLoggedIn = sessionStorage.getItem("isLoggedIn") === "true";
@@ -32,13 +36,11 @@ export function updateUserBadge(delay = 0) {
     badge.textContent = "";
     badge.style.display = "none";
   }
+
   setTimeout(() => {
     badge.style.display = "none";
-  }, 6000); 
-  
+  }, 6000);
 }
-
-
 
 export function showScreen(screenId) {
   document.querySelectorAll('.screen').forEach(screen => {
@@ -58,6 +60,15 @@ export function showScreen(screenId) {
     }, 50);
   }
 
+  if (screenId === "gameScreen") {
+    ambientMusic.pause();
+    ambientMusic.currentTime = 0;
+  } else {
+    if (ambientMusic.paused && !isMuted) {
+      ambientMusic.play().catch(err => console.warn("Autoplay blocked:", err));
+    }
+  }
+
   const topRightBtn = document.getElementById("viewHighScores");
   if (topRightBtn) {
     topRightBtn.classList.toggle("hidden", screenId !== "configScreen");
@@ -66,12 +77,7 @@ export function showScreen(screenId) {
   const mainMenuBtn = document.getElementById("mainMenuButton");
   if (mainMenuBtn) {
     mainMenuBtn.style.display = (screenId === "homeScreen") ? "none" : "block";
-
-    if (screenId === "loginScreen" || screenId === "registerScreen") {
-      mainMenuBtn.textContent = "Menu";
-    } else {
-      mainMenuBtn.textContent = "Log Out";
-    }
+    mainMenuBtn.textContent = (screenId === "loginScreen" || screenId === "registerScreen") ? "Menu" : "Log Out";
   }
 
   const newGameBtn = document.getElementById("newGameButton");
@@ -81,15 +87,39 @@ export function showScreen(screenId) {
   }
 }
 
-
-
 window.addEventListener('DOMContentLoaded', () => {
+  const muteBtn = document.getElementById("muteButton");
+  if (muteBtn) {
+    muteBtn.addEventListener("click", () => {
+      window.isMuted = !window.isMuted;
+      muteBtn.textContent = window.isMuted ? "🔇" : "🔊";
+    
+      [ambientMusic, startSound].forEach(audio => {
+        audio.muted = window.isMuted;
+      });
+    
+      import('./game.js').then(module => {
+        module.applyMuteSetting?.();  // תפעיל גם את ההגדרות שם אם קיימות
+      });
+    });
+    
+    
+  }
+
+  const enableAudio = () => {
+    if (ambientMusic.paused) {
+      ambientMusic.play().catch(err => {
+        console.warn("Autoplay blocked:", err);
+      });
+    }
+    window.removeEventListener("click", enableAudio);
+  };
+  window.addEventListener("click", enableAudio);
+
   window.addEventListener("beforeunload", () => {
     sessionStorage.removeItem("isLoggedIn");
     resetGameConfig();
   });
-
-  
 
   const defaultScreen = sessionStorage.getItem("nextScreen");
   if (defaultScreen === "configScreen") {
@@ -98,7 +128,6 @@ window.addEventListener('DOMContentLoaded', () => {
   showScreen(defaultScreen || "homeScreen");
   sessionStorage.removeItem("nextScreen");
 
-  // new game button
   const startBtn = document.getElementById("newGameButton");
   if (startBtn) {
     startBtn.addEventListener("click", () => {
@@ -120,58 +149,36 @@ window.addEventListener('DOMContentLoaded', () => {
 
       stopGame();
       showScreen("gameScreen");
-
       setTimeout(() => {
         initGame({ fireKey, gameDuration });
       }, 100);
     });
   }
 
-  // about modal
   const dialog = document.getElementById("myAboutModal");
   const openBtn = document.getElementById("aboutButton");
   const closeBtn = document.getElementById("closeAboutModal");
 
   if (dialog && openBtn && closeBtn) {
-    openBtn.addEventListener("click", () => {
-      dialog.showModal();
-    });
-
-    closeBtn.addEventListener("click", () => {
-      dialog.close();
-    });
-
+    openBtn.addEventListener("click", () => dialog.showModal());
+    closeBtn.addEventListener("click", () => dialog.close());
     dialog.addEventListener("click", (event) => {
       const rect = dialog.getBoundingClientRect();
-      const clickedInside =
+      const inside =
         event.clientX >= rect.left &&
         event.clientX <= rect.right &&
         event.clientY >= rect.top &&
         event.clientY <= rect.bottom;
-
-      if (!clickedInside) {
-        dialog.close();
-      }
+      if (!inside) dialog.close();
     });
   }
 
-  // sign up button
   const regBtn = document.getElementById('registerBtn');
-  if (regBtn) {
-    regBtn.addEventListener('click', () => {
-      showScreen('registerScreen');
-    });
-  }
+  if (regBtn) regBtn.addEventListener('click', () => showScreen('registerScreen'));
 
-  // login button
   const logBtn = document.getElementById('loginBtn');
-  if (logBtn) {
-    logBtn.addEventListener('click', () => {
-      showScreen('loginScreen');
-    });
-  }
+  if (logBtn) logBtn.addEventListener('click', () => showScreen('loginScreen'));
 
-  // main menu button
   const mainMenuBtn = document.getElementById("mainMenuButton");
   if (mainMenuBtn) {
     mainMenuBtn.addEventListener("click", () => {
@@ -182,7 +189,6 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // settings button
   const settingsBtn = document.getElementById("settingsButton");
   if (settingsBtn) {
     settingsBtn.addEventListener("click", () => {
@@ -197,7 +203,6 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-//high scores button
   const showScoresBtn = document.getElementById("viewHighScores");
   if (showScoresBtn) {
     showScoresBtn.addEventListener("click", () => {
@@ -207,15 +212,11 @@ window.addEventListener('DOMContentLoaded', () => {
 
       if (scores.length > 0) {
         const rank = scores.indexOf(scores[0]) + 1;
-
         import("./game.js").then(module => {
           module.showScoresTable(scores, rank);
-
           setTimeout(() => {
             const panel = document.getElementById("highScoresBox");
-            if (panel) {
-              panel.classList.remove("visible");
-            }
+            if (panel) panel.classList.remove("visible");
           }, 5000);
         });
       } else {
@@ -223,6 +224,4 @@ window.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
-
-
 });

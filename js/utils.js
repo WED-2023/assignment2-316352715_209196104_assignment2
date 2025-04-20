@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
     btn.addEventListener("click", () => {
       if (btn.id !== "newGameButton") {
         clickSound.currentTime = 0;
-        clickSound.play();
+        if (!window.isMuted) clickSound.play();
       }
     });
   });

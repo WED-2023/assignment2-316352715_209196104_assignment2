@@ -3,6 +3,9 @@ canvas.width = Math.min(window.innerWidth * 0.7, 720);
 canvas.height = canvas.width * 0.75;
 const ctx = canvas.getContext("2d");
 
+
+
+
 export let currentFireKey = null;
 let remainingTime = 30;
 let gameOver = false;
@@ -44,6 +47,16 @@ const gameWinSong = new Audio("assets/sounds/gameWon.mp3");
 const enemyShootMp3 = new Audio("assets/sounds/enemyShot.mp3");
 const heroShootMp3 = new Audio("assets/sounds/heroShot.mp3");
 const heroShootPool = [];
+
+[gameSong, gameOverSong, gameWinSong, enemyShootMp3].forEach(sound => {
+  sound.muted = window.isMuted;
+});
+
+export function applyMuteSetting() {
+  [gameSong, gameOverSong, gameWinSong, enemyShootMp3, heroShootMp3].forEach(sound => {
+    sound.muted = window.isMuted;
+  });
+}
 
 const hero = {
   x: 100,
@@ -89,7 +102,8 @@ function initMonsters() {
 }
 
 export function initGame(settings) {
-  gameSong.currentTime = 0;
+  applyMuteSetting();  
+gameSong.currentTime = 0;
   gameSong.play();
   const { fireKey, gameDuration } = settings;
   currentFireKey = fireKey;
@@ -140,12 +154,14 @@ document.addEventListener("keyup", e => delete keys[e.key]);
 function shoot() {
   if (gameOver) return;
 
-  const available = heroShootPool.find(s => s.ended || s.paused);
-  const sound = available || heroShootMp3.cloneNode();
-  sound.volume = 0.5;
-  sound.currentTime = 0;
-  sound.play();
-  if (!available) heroShootPool.push(sound);
+  if (!window.isMuted) {
+    const available = heroShootPool.find(s => s.ended || s.paused);
+    const sound = available || heroShootMp3.cloneNode();
+    sound.volume = 0.5;
+    sound.currentTime = 0;
+    sound.play();
+    if (!available) heroShootPool.push(sound);
+  }
 
   bullets.push({
     x: hero.x + hero.width / 2,
@@ -154,6 +170,7 @@ function shoot() {
     speed: BULLET_SPEED
   });
 }
+
 
 function enemyShoot() {
   if (gameOver || monsters.length === 0) return;
@@ -170,7 +187,10 @@ function enemyShoot() {
     radius: ENEMY_BULLET_RADIUS,
     speed: ENEMY_BULLET_SPEED
   });
+  if (!window.isMuted) {
+
   enemyShootMp3.play();
+  }
 }
 
 
@@ -306,20 +326,21 @@ function draw() {
     if (isChampion) {
       message = "👑 Champion!";
       color = "#00ffcc";
-      gameWinSong.play();
+      if (!window.isMuted) gameWinSong.play();
     } else if (isWinner) {
       message = "🏆 Winner!";
       color = "#33ff33";
-      gameWinSong.play();
+      if (!window.isMuted) gameWinSong.play();
     } else if (isCanDoBetter) {
       message = "😐 You Can Do Better!";
       color = "#ffff66";
-      gameOverSong.play();
+      if (!window.isMuted) gameOverSong.play();
     } else {
       message = "💀 You Lost";
       color = "#ff3333";
-      gameOverSong.play();
+      if (!window.isMuted) gameOverSong.play();
     }
+    
   
     ctx.textAlign = "center";
     ctx.fillStyle = color;

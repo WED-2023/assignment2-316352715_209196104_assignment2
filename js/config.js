@@ -83,7 +83,7 @@ export function renderConfigWizard() {
 
   function showSaved() {
     msg.classList.remove("hidden");
-    successSound.play();
+    if (!window.isMuted) successSound.play();
     setTimeout(() => msg.classList.add("hidden"), 2000);
   }
 
