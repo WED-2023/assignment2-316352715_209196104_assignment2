@@ -1,24 +1,22 @@
-
 const canvas = document.getElementById("gameCanvas");
-canvas.width = Math.min(window.innerWidth * 0.7, 720);  // לדוגמה: 70% מהמסך, מקסימום 720
-canvas.height = canvas.width * 0.75; // יחס 4:3
+canvas.width = Math.min(window.innerWidth * 0.7, 720);
+canvas.height = canvas.width * 0.75;
 const ctx = canvas.getContext("2d");
-
 
 export let currentFireKey = null;
 let remainingTime = 30;
 let gameOver = false;
 let score = 0;
-let gameTime = 30; // seconds
-let heroLives = 3; // chicken has initial 3 lives until game over
-let isCanDoBetter = false; // if time's up and less then 100
-let isWinner = false; // if time's up and more then 100
-let isLoser=false; // if got killed
-let isChampion = false; //if kill them all
-let timeUp=false;
+let gameTime = 30;
+let heroLives = 3;
+let isCanDoBetter = false;
+let isWinner = false;
+let isLoser = false;
+let isChampion = false;
+let timeUp = false;
 let gameLoopRunning = false;
 
-let scoreSaved = false; //monitor if we saved the score
+let scoreSaved = false;
 
 let monsterSpeed = 1;
 let ENEMY_BULLET_SPEED = 3;
@@ -26,7 +24,6 @@ let increaseTimes = 4;
 let speedInterval = null;
 let timerInterval = null;
 
-// Load images
 const bgImage = new Image();
 bgImage.src = "assets/images/bg.webp";
 
@@ -39,16 +36,15 @@ monsterImage.src = "assets/images/kfc.webp";
 const heartImage = new Image();
 heartImage.src = "assets/images/heart.webp";
 
-//Load sounds
 const gameSong = new Audio("assets/sounds/gameSong.mp3");
-gameSong.loop = true; 
+gameSong.loop = true;
 
 const gameOverSong = new Audio("assets/sounds/game-over-arcade-6435.mp3");
 const gameWinSong = new Audio("assets/sounds/gameWon.mp3");
 const enemyShootMp3 = new Audio("assets/sounds/enemyShot.mp3");
 const heroShootMp3 = new Audio("assets/sounds/heroShot.mp3");
+const heroShootPool = [];
 
-// Hero object (the chicken)
 const hero = {
   x: 100,
   y: canvas.height * 0.7,
@@ -57,17 +53,14 @@ const hero = {
   speed: 5
 };
 
-// Bullets
 let bullets = [];
 const BULLET_SPEED = 8;
 const BULLET_RADIUS = 5;
 
-// Enemy bullets
 let enemyBullets = [];
 const ENEMY_BULLET_RADIUS = 5;
 let lastEnemyShooterIndex = null;
 
-// Monsters
 let monsters = [];
 const rows = 4;
 const cols = 5;
@@ -78,12 +71,10 @@ let monsterDirection = 1;
 
 function initMonsters() {
   monsters = [];
-
   const totalWidth = cols * monsterWidth + (cols - 1) * monsterSpacing;
   const totalHeight = rows * monsterHeight + (rows - 1) * monsterSpacing;
-
-  const startX = (canvas.width - totalWidth) / 2;  // 📦 מתחילים מהמרכז ולא מהשוליים
-  const startY = 50; // מרחק מהחלק העליון
+  const startX = (canvas.width - totalWidth) / 2;
+  const startY = 50;
 
   for (let row = 0; row < rows; row++) {
     for (let col = 0; col < cols; col++) {
@@ -96,8 +87,6 @@ function initMonsters() {
     }
   }
 }
-
-
 
 export function initGame(settings) {
   gameSong.currentTime = 0;
@@ -114,20 +103,18 @@ export function initGame(settings) {
   monsterSpeed = 1;
   ENEMY_BULLET_SPEED = 3;
   increaseTimes = 4;
-  clearInterval(speedInterval); // עוצר את הריצה הקודמת אם הייתה
+  clearInterval(speedInterval);
   scoreSaved = false;
   initMonsters();
-  monsterDirection = 1; // תמיד להתחיל ימינה
+  monsterDirection = 1;
 
-
-  // ✅ זהו הסט אינטרוול הנקי והמוגן
   speedInterval = setInterval(() => {
     if (increaseTimes > 0) {
       monsterSpeed += 5;
       ENEMY_BULLET_SPEED += 5;
       increaseTimes--;
     } else {
-      clearInterval(speedInterval); // 🔥 חשוב: לעצור ברגע שגמרנו
+      clearInterval(speedInterval);
     }
   }, 5000);
 
@@ -138,14 +125,12 @@ export function initGame(settings) {
       loop();
     }
   }, 100);
-  
 }
-
 
 const keys = {};
 document.addEventListener("keydown", e => {
   if (e.code === currentFireKey) {
-    e.preventDefault(); 
+    e.preventDefault();
     shoot();
   }
   keys[e.key] = true;
@@ -154,7 +139,14 @@ document.addEventListener("keyup", e => delete keys[e.key]);
 
 function shoot() {
   if (gameOver) return;
-  heroShootMp3.play();
+
+  const available = heroShootPool.find(s => s.ended || s.paused);
+  const sound = available || heroShootMp3.cloneNode();
+  sound.volume = 0.5;
+  sound.currentTime = 0;
+  sound.play();
+  if (!available) heroShootPool.push(sound);
+
   bullets.push({
     x: hero.x + hero.width / 2,
     y: hero.y,
@@ -180,6 +172,7 @@ function enemyShoot() {
   });
   enemyShootMp3.play();
 }
+
 
 function update() {
   if (gameOver) return;
