@@ -1,8 +1,3 @@
-Of course! Here's a polished English version of your `README.md` file for your Chicken Spaceship game:
-
----
-
-```markdown
 # 🐔 Chicken Spaceship - Arcade Game
 
 **Chicken Spaceship** is a retro-style arcade shooter game where you play as a brave space chicken battling waves of fried chicken invaders on a quest for galactic glory.
@@ -96,7 +91,8 @@ Of course! Here's a polished English version of your `README.md` file for your C
 
 ## ✨ Credits
 
-- 👨‍💻 Code: Rom Sheynis & Lioz Shor
+- 👨‍💻 Code: Moshe Atsits & Lioz  
+- 🎨 Graphics: AI + custom icons  
 - 🔊 Sounds: Pixabay & Mixkit  
 - ✍️ Fonts: [Orbitron](https://fonts.google.com/specimen/Orbitron) from Google Fonts
 
@@ -113,6 +109,3 @@ Of course! Here's a polished English version of your `README.md` file for your C
 ---
 
 ## 🐣 Good cluck & have fun!
-```
-
----
