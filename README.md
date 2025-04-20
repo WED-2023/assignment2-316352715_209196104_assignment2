@@ -71,6 +71,14 @@
 
 ---
 
+
+📦 Optimization Notes
+All images and sound files have been compressed for faster page loading.
+
+However, due to GitHub Pages server latency, the initial load may take a few seconds until assets are fully retrieved and cached.
+---
+
+
 ## ⚙️ Technologies
 
 - HTML5
