@@ -57,10 +57,10 @@ export function applyMuteSetting() {
     sound.muted = window.isMuted;
   });
 }
-
+const initXpoint = Math.random()*(canvas.width-32)
 const hero = {
-  x: 100,
-  y: canvas.height * 0.7,
+  x:initXpoint,
+  y: canvas.height-32,
   width: 32,
   height: 32,
   speed: 5
@@ -183,12 +183,20 @@ function enemyShoot() {
   const shooter = monsters[randomIndex];
   lastEnemyShooterIndex = randomIndex;
 
+  const dx = hero.x + hero.width / 2 - (shooter.x + shooter.width / 2);
+  const dy = hero.y + hero.height / 2 - (shooter.y + shooter.height / 2);
+  const distance = Math.sqrt(dx * dx + dy * dy);
+  const unitX = dx / distance;
+  const unitY = dy / distance;
+  
   enemyBullets.push({
     x: shooter.x + shooter.width / 2,
-    y: shooter.y + shooter.height,
+    y: shooter.y + shooter.height / 2,
     radius: ENEMY_BULLET_RADIUS,
-    speed: ENEMY_BULLET_SPEED
+    speedX: unitX * ENEMY_BULLET_SPEED,
+    speedY: unitY * ENEMY_BULLET_SPEED
   });
+  
 
   if (!window.isMuted) {
     const sound = enemyShootMp3.cloneNode();
@@ -247,17 +255,26 @@ function update() {
   });
 
   enemyBullets.forEach((bullet, index) => {
-    bullet.y += bullet.speed;
-    if (bullet.y > canvas.height) {
+    // bullet.y += bullet.speed;
+    bullet.x += bullet.speedX;
+    bullet.y += bullet.speedY;
+
+    if (
+      bullet.y > canvas.height || bullet.y < 0 ||
+      bullet.x > canvas.width || bullet.x < 0
+    ) {
       enemyBullets.splice(index, 1);
       return;
     }
     const dx = bullet.x - (hero.x + hero.width / 2);
     const dy = bullet.y - (hero.y + hero.height / 2);
     const distance = Math.sqrt(dx * dx + dy * dy);
+
     if (distance < hero.width / 2 + bullet.radius) {
       enemyBullets.splice(index, 1);
       heroLives--;
+      hero.x = initXpoint    //respawn at intial point of the game
+      hero.y = canvas.height-hero.width
       if (heroLives === 0) {
         isLoser=true;
         isChampion=false;
@@ -320,7 +337,7 @@ function draw() {
       else isCanDoBetter = true;
     }
   
-    // 🌈 צבע רקע לפי תוצאה
+
     ctx.fillStyle = "rgba(0, 0, 0, 0.7)";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
   
@@ -364,8 +381,7 @@ function saveScore() {
 
   scores.push(score);
   scores.sort((a, b) => b - a);
-  scores = scores.slice(0, 10); // ✅ שומר רק 10 הכי גבוהים
-
+  scores = scores.slice(0, 10);
   localStorage.setItem(key, JSON.stringify(scores));
   return { scores, rank: scores.indexOf(score) + 1 };
 }
@@ -416,6 +432,5 @@ export function stopGame() {
   gameSong.pause();
   gameSong.currentTime = 0;
   clearInterval(speedInterval);
-  clearInterval(timerInterval); 
-}
+  clearInterval(timerInterval); }
 
