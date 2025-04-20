@@ -91,7 +91,7 @@
 
 ## ✨ Credits
 
-- 👨‍💻 Code: Moshe Atsits & Lioz  
+- 👨‍💻 Code: Rom Sheynis & Lioz Shor
 - 🎨 Graphics: AI + custom icons  
 - 🔊 Sounds: Pixabay & Mixkit  
 - ✍️ Fonts: [Orbitron](https://fonts.google.com/specimen/Orbitron) from Google Fonts
@@ -108,4 +108,3 @@
 
 ---
 
-## 🐣 Good cluck & have fun!
