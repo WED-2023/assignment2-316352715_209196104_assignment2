@@ -4,7 +4,7 @@ import { initGame, stopGame } from './game.js';
 const startSound = new Audio("assets/sounds/StartGame.mp3");
 const ambientMusic = new Audio("assets/sounds/arcade-party-173553-compressed.mp3");
 ambientMusic.loop = true;
-ambientMusic.volume = 0.2;
+ambientMusic.volume = 0.05;
 window.isMuted = false;
 
 export function updateUserBadge(delay = 0) {

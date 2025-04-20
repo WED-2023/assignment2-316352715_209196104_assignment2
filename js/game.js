@@ -178,18 +178,22 @@ function enemyShoot() {
     const bullet = enemyBullets[enemyBullets.length - 1];
     if (bullet.y < canvas.height * 0.75) return;
   }
+
   const randomIndex = Math.floor(Math.random() * monsters.length);
   const shooter = monsters[randomIndex];
   lastEnemyShooterIndex = randomIndex;
+
   enemyBullets.push({
     x: shooter.x + shooter.width / 2,
     y: shooter.y + shooter.height,
     radius: ENEMY_BULLET_RADIUS,
     speed: ENEMY_BULLET_SPEED
   });
-  if (!window.isMuted) {
 
-  enemyShootMp3.play();
+  if (!window.isMuted) {
+    const sound = enemyShootMp3.cloneNode();
+    sound.volume = 0.; 
+    sound.play();
   }
 }
 
