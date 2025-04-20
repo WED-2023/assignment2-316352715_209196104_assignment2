@@ -696,6 +696,25 @@
     background-color: #00c6ff;
     color: black;
   }
+
+  .login-hint {
+    margin-top: 1.2rem;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.85rem;
+    text-align: center;
+    color: #b0b0b0;
+    letter-spacing: 0.5px;
+    background-color: rgba(255, 255, 255, 0.03);
+    padding: 0.6rem 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .login-hint .emoji {
+    margin-right: 0.4rem;
+  }
+  
   
   
   
