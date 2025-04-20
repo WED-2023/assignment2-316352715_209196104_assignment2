@@ -1,6 +1,8 @@
 import { renderConfigWizard, resetGameConfig } from './config.js';
 import { initGame, stopGame } from './game.js';
 
+
+
 window.globalVolume = 0.5; 
 
 const startSound = new Audio("assets/sounds/StartGame.mp3");
@@ -8,6 +10,36 @@ const ambientMusic = new Audio("assets/sounds/arcade-party-173553-compressed.mp3
 ambientMusic.loop = true;
 ambientMusic.volume = 0.05;
 window.isMuted = false;
+function ensureMinimumResolution() {
+  const minWidth = 1366;
+  const minHeight = 768;
+  const userWidth = window.innerWidth;
+  const userHeight = window.innerHeight;
+
+  if (userWidth < minWidth || userHeight < minHeight) {
+    document.body.innerHTML = `
+      <div style="text-align: center; padding-top: 15vh; font-family: 'Orbitron', sans-serif;">
+        <h2 style="color: red; font-size: 2rem;">
+          ⚠️ Screen too small!
+        </h2>
+        <p style="font-size: 1.2rem; color: #333;">
+          This game requires at least <strong>${minWidth}×${minHeight}</strong><br>
+          Your current screen size: <strong>${userWidth}×${userHeight}</strong>
+        </p>
+        <p style="margin-top: 1.5rem; font-size: 1rem; color: #555;">
+          Try one of the following:
+        </p>
+        <ul style="list-style: none; padding: 0; font-size: 1rem; color: #555;">
+          <li>🔍 Maximize your browser window</li>
+          <li>🖥️ Exit split-screen mode (if active)</li>
+          <li>🧼 Close developer tools (DevTools)</li>
+          <li>🔄 Refresh the page (F5) after resizing</li>
+        </ul>
+      </div>
+    `;
+  }
+}
+
 
 export function updateUserBadge(delay = 0) {
   const isLoggedIn = sessionStorage.getItem("isLoggedIn") === "true";
@@ -45,6 +77,8 @@ export function updateUserBadge(delay = 0) {
 }
 
 export function showScreen(screenId) {
+  ensureMinimumResolution();
+
   document.querySelectorAll('.screen').forEach(screen => {
     screen.classList.remove('active');
   });
@@ -101,7 +135,7 @@ window.addEventListener('DOMContentLoaded', () => {
       });
     
       import('./game.js').then(module => {
-        module.applyMuteSetting?.();  // תפעיל גם את ההגדרות שם אם קיימות
+        module.applyMuteSetting?.();  
       });
     });
     

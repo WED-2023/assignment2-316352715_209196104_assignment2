@@ -1,5 +1,5 @@
 import { showScreen, updateUserBadge } from "./nav.js";
-import { renderConfigWizard } from "./config.js"; // ⬅️ הוסף אם לא קיים
+import { renderConfigWizard } from "./config.js"; 
 import { showMessage } from "./utils.js";
 
 
@@ -25,7 +25,7 @@ toggleConfirm?.addEventListener("change", function () {
 
 
 document.getElementById("registerForm").addEventListener("submit", function(e) {
-  e.preventDefault(); // prevent form from submitting until we validate
+  e.preventDefault(); 
 
   const firstName = document.getElementById("registerFirstname").value.trim();
   const lastName = document.getElementById("registerLastname").value.trim();

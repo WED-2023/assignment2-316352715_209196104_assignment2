@@ -58,7 +58,7 @@ export function preloadAssets(onDone) {
     if (loadingPercent) loadingPercent.textContent = percent + "%";
 
     if (loaded === total) {
-      setTimeout(() => onDone(), 300); // השהייה קלה לסיום נעים
+      setTimeout(() => onDone(), 300); 
     }
   }
 

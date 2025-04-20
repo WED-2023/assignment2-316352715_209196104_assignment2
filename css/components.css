@@ -1,8 +1,8 @@
 .form-container {
   max-width: 400px;
   width: 100%;
-  max-height: 80vh;        /* גובה מרבי */
-  overflow-y: auto;        /* גלילה פנימית אם צריך */
+  max-height: 80vh;        
+  overflow-y: auto;        
   margin: 0 auto;
   padding: 2rem;
   background-color: #ffffff;
@@ -41,15 +41,15 @@
   }
   
   .form-container input {
-    background-color: white;       /* 🟢 לבן */
-    color: #333;                   /* טקסט כהה */
-    border: 2px solid #00c6ff;     /* גבול זוהר */
+    background-color: white;       
+    color: #333;                   
+    border: 2px solid #00c6ff;     
     border-radius: 8px;
     font-family: 'Orbitron', sans-serif;
     font-size: 14px;
     padding: 0.7rem;
     margin-bottom: 1rem;
-    box-shadow: 0 0 10px #00c6ff;  /* אפקט ניאון עדין */
+    box-shadow: 0 0 10px #00c6ff;  
     transition: box-shadow 0.3s, border-color 0.3s;
   }
   
@@ -171,7 +171,7 @@
     border: 2px solid #00c6ff;
     color: #00c6ff;
     font-weight: bold;
-    padding: 14px 28px;               /* יותר מרווח פנימי */
+    padding: 14px 28px;
     border-radius: 30px;
     text-align: center;
     box-shadow: none;

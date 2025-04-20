@@ -416,6 +416,6 @@ export function stopGame() {
   gameSong.pause();
   gameSong.currentTime = 0;
   clearInterval(speedInterval);
-  clearInterval(timerInterval); // ✅ עצור גם את הטיימר
+  clearInterval(timerInterval); 
 }
 

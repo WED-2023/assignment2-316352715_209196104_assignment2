@@ -64,7 +64,7 @@ export function renderConfigWizard() {
 
   function getReadableKeyName(code, key) {
     if (code === "Space") return "Spacebar";
-    return key.toUpperCase(); // מראה רק את האות עצמה
+    return key.toUpperCase(); 
   }
   
 
