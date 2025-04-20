@@ -43,6 +43,7 @@ export function preloadAssets(onDone) {
     "assets/sounds/heroShot.mp3",
     "assets/sounds/savedSettings.wav",
     "assets/sounds/StartGame.wav"
+    
   ];
 
   let loaded = 0;

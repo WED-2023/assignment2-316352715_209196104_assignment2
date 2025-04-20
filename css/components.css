@@ -41,19 +41,27 @@
   }
   
   .form-container input {
+    background-color: white;       /* 🟢 לבן */
+    color: #333;                   /* טקסט כהה */
+    border: 2px solid #00c6ff;     /* גבול זוהר */
+    border-radius: 8px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 14px;
     padding: 0.7rem;
     margin-bottom: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    font-size: 14px;
-    font-family: inherit;
-    transition: border-color 0.3s;
+    box-shadow: 0 0 10px #00c6ff;  /* אפקט ניאון עדין */
+    transition: box-shadow 0.3s, border-color 0.3s;
   }
   
+  
+  
   .form-container input:focus {
-    border-color: #007BFF;
     outline: none;
+    border-color: #00ffff;
+    box-shadow: 0 0 15px #00ffff;
   }
+  
+  
   
   .form-container button {
     padding: 0.8rem;
