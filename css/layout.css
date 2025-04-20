@@ -92,3 +92,17 @@ input[type="text"]:focus, input[type="password"]:focus {
   box-shadow: 0 0 20px #00ffff;
   border-color: #00ffff;
 }
+#siteFooter {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 4px 10px;
+  font-size: 12px;
+  text-align: center;
+  background: transparent;
+  color: #00c6ff;
+  font-family: 'Orbitron', sans-serif;
+  z-index: 1000;
+}
+
