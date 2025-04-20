@@ -57,10 +57,10 @@ export function applyMuteSetting() {
     sound.muted = window.isMuted;
   });
 }
-
+const initXpoint = Math.random()*(canvas.width-32)
 const hero = {
   x:initXpoint,
-  y: canvas.height -32,
+  y: canvas.height-32,
   width: 32,
   height: 32,
   speed: 5
@@ -183,12 +183,20 @@ function enemyShoot() {
   const shooter = monsters[randomIndex];
   lastEnemyShooterIndex = randomIndex;
 
+  const dx = hero.x + hero.width / 2 - (shooter.x + shooter.width / 2);
+  const dy = hero.y + hero.height / 2 - (shooter.y + shooter.height / 2);
+  const distance = Math.sqrt(dx * dx + dy * dy);
+  const unitX = dx / distance;
+  const unitY = dy / distance;
+  
   enemyBullets.push({
     x: shooter.x + shooter.width / 2,
-    y: shooter.y + shooter.height,
+    y: shooter.y + shooter.height / 2,
     radius: ENEMY_BULLET_RADIUS,
-    speed: ENEMY_BULLET_SPEED
+    speedX: unitX * ENEMY_BULLET_SPEED,
+    speedY: unitY * ENEMY_BULLET_SPEED
   });
+  
 
   if (!window.isMuted) {
     const sound = enemyShootMp3.cloneNode();
@@ -261,11 +269,12 @@ function update() {
     const dx = bullet.x - (hero.x + hero.width / 2);
     const dy = bullet.y - (hero.y + hero.height / 2);
     const distance = Math.sqrt(dx * dx + dy * dy);
+
     if (distance < hero.width / 2 + bullet.radius) {
       enemyBullets.splice(index, 1);
       heroLives--;
       hero.x = initXpoint    //respawn at intial point of the game
-      hero.y = canvas.height- hero.width
+      hero.y = canvas.height-hero.width
       if (heroLives === 0) {
         isLoser=true;
         isChampion=false;
