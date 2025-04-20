@@ -273,9 +273,13 @@ function draw() {
     ctx.arc(bullet.x, bullet.y, bullet.radius, 0, Math.PI * 2);
     ctx.fill();
   });
-  ctx.fillStyle = "white";
-  ctx.font = "20px Arial";
-  ctx.fillText("Score: " + score + " | Time left: " + Math.ceil(gameTime) + " seconds", 20, 30);
+  if (!gameOver) {
+    ctx.fillStyle = "white";
+    ctx.font = "20px Orbitron";
+    ctx.textAlign = "left";
+    ctx.fillText("Score: " + score + " | Time left: " + Math.ceil(gameTime) + " seconds", 20, 30);
+  }
+  
   for (let i = 0; i < heroLives; i++) {
     if (heartImage.complete) {
       ctx.drawImage(heartImage, 20 + i * 40, 60, 30, 30);
@@ -283,52 +287,55 @@ function draw() {
   }
   if (gameOver) {
     gameSong.pause();
+  
     if (!scoreSaved) {
       scoreSaved = true;
       const { scores, rank } = saveScore();
-      showScoresTable(scores, rank); // ⏱️ מידית ללא setTimeout
+      showScoresTable(scores, rank);
     }
-    
   
-    // 🧼 אפס את כל הדגלים
     isCanDoBetter = false;
     isWinner = false;
     isLoser = false;
   
-    // אל תאפס את isChampion כאן — הוא נקבע כבר כשנגמרו כל המפלצות!
-  
     if (!isChampion && timeUp) {
-      if (score >= 100) {
-        isWinner = true;
-      } else {
-        isCanDoBetter = true;
-      }
+      if (score >= 100) isWinner = true;
+      else isCanDoBetter = true;
     }
   
-    // 🎯 תוצאה
+    // 🌈 צבע רקע לפי תוצאה
+    ctx.fillStyle = "rgba(0, 0, 0, 0.7)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+  
+    let message = "Game Over";
+    let color = "white";
+  
     if (isChampion) {
+      message = "👑 Champion!";
+      color = "#00ffcc";
       gameWinSong.play();
-      ctx.fillStyle = "white";
-      ctx.font = "40px Arial";
-      ctx.fillText("Champion!", canvas.width / 2 - 120, canvas.height / 2);
     } else if (isWinner) {
+      message = "🏆 Winner!";
+      color = "#33ff33";
       gameWinSong.play();
-      ctx.fillStyle = "white";
-      ctx.font = "40px Arial";
-      ctx.fillText("Winner!", canvas.width / 2 - 120, canvas.height / 2);
     } else if (isCanDoBetter) {
+      message = "😐 You Can Do Better!";
+      color = "#ffff66";
       gameOverSong.play();
-      ctx.fillStyle = "white";
-      ctx.font = "40px Arial";
-      ctx.fillText("You can do better. Your score: " + score, canvas.width / 2 - 120, canvas.height / 2);
     } else {
+      message = "💀 You Lost";
+      color = "#ff3333";
       gameOverSong.play();
-      ctx.fillStyle = "white";
-      ctx.font = "40px Arial";
-      ctx.fillText("You Lost", canvas.width / 2 - 120, canvas.height / 2);
     }
-  }
   
+    ctx.textAlign = "center";
+    ctx.fillStyle = color;
+    ctx.font = "48px Orbitron";
+    ctx.fillText(message, canvas.width / 2, canvas.height / 2 - 20);
+  
+    ctx.font = "24px Orbitron";
+    ctx.fillText(`Score: ${score}`, canvas.width / 2, canvas.height / 2 + 30);
+  }
   
 }
 
