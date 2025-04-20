@@ -1,5 +1,7 @@
-import {showScreen} from "./nav.js"
+import { showScreen, updateUserBadge } from "./nav.js";
+import { renderConfigWizard } from "./config.js"; // ⬅️ הוסף אם לא קיים
 import { showMessage } from "./utils.js";
+
 
 
 let users = JSON.parse(localStorage.getItem("users"));
@@ -76,17 +78,13 @@ if (password !== confirmPassword) {
     users.push(newUser);
     localStorage.setItem("users", JSON.stringify(users));
     sessionStorage.setItem("nextScreen", "configScreen");
+    sessionStorage.setItem("isLoggedIn", "true");
+    localStorage.removeItem(`scores_${userName}`);
+    sessionStorage.setItem("username", userName); 
+    renderConfigWizard();
+    updateUserBadge(0); 
     showScreen("configScreen");
   }, 1500);
-  
-  // You can submit the form here (or send it with fetch)
-  // e.target.submit();
-  const newUser = {username:userName,password}
-  users.push(newUser);
-  localStorage.setItem("users",JSON.stringify(users));
-  
-  sessionStorage.setItem("nextScreen", "configScreen");
-  showScreen("configScreen");
 
 });
 

@@ -12,11 +12,31 @@
 
     
 </head>
-<body>
+<body> 
+  <div id="loadingScreen">
+    <h2>🛸 Loading Game...</h2>
+    <div id="progressWrapper">
+      <div id="progressBar"></div>
+    </div>
+    <p id="loadingPercent">0%</p>
+  </div>
+  
+  
+  <div id="userBadge" class="user-badge"></div>       
+  <div id="highScoresBox" class="high-scores hidden">
+  <h3>🏆 Your High Scores</h3>
+      <ol id="scoreList"></ol>
+    </div>
+
+
     <div id="homeScreen" class="screen">
-        <img id="logo" src="assets/images/logo.png" alt="">
-        <h1 >Rom Sheynis - 209196104</h1>
-        <h1 >Lioz Shor - 316352715</h1>
+        <img id="logo" src="assets/images/logo.webp" alt="">
+        <h1>Rom Sheynis - 209196104</h1>
+        <p><a href="https://wed-2023.github.io/209196104/" class="profile-link" target="_blank">View Rom's previous project</a></p>
+        
+        <h1>Lioz Shor - 316352715</h1>
+        <p><a href="https://wed-2023.github.io/316352715/" class="profile-link" target="_blank">View Lioz's previous project</a></p>
+        
         <div id="button-container">
             <button id="registerBtn">Register</button> 
             <button id="loginBtn">Login</button>
@@ -71,13 +91,11 @@
 
         <div id="gameScreen" class="screen">
           <div id="gameWrapper">
-            <canvas id="gameCanvas" width="1000" height="800"></canvas> 
-            <div id="highScoresBox">
-              <h3>🏆 Your High Scores</h3>
-              <ol id="scoreList"></ol>
-            </div>
+            <canvas id="gameCanvas"></canvas>
           </div>
         </div>
+
+        
 
 
     <template id="configFormTemplate">
@@ -129,8 +147,6 @@
     </div>
 
     </div>
-
-    <button id="aboutButton">About</button>
     <dialog id="myAboutModal">
       <button id="closeAboutModal" class="close-x" aria-label="Close">
         <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" fill="none" stroke-width="2">
@@ -138,12 +154,59 @@
           <line x1="6" y1="6" x2="18" y2="18" />
         </svg>
       </button>
-            <form method="dialog">
-        <h2>About This Game</h2>
-        <p>This game was created by Lioz and Rom 🐔🛸</p>
-        <button>OK</button>
+    
+      <form method="dialog" class="scrollable-dialog-form">
+        <h2>About Chicken Spaceship</h2>
+        <div class="scrollable-content">
+
+    
+        <p>
+          <strong>Chicken Spaceship</strong> is a retro-style space shooter built entirely with HTML, CSS, and vanilla JavaScript using the native <code>&lt;dialog&gt;</code> element.
+        </p>
+    
+        <section>
+          <h3>🎮 Game Features</h3>
+          <ul>
+            <li>Move with arrow keys</li>
+            <li>Customizable fire key</li>
+            <li>Lives and scoring system</li>
+            <li>Victory and game-over conditions</li>
+            <li>High score saving per user - reset when another user login</li>
+          </ul>
+        </section>
+    
+        <section>
+          <h3>🔊 Sound & Music</h3>
+          <ul>
+            <li>Ambient and battle music</li>
+            <li>Sound effects for shots, actions and game states</li>
+            <li>Global mute toggle</li>
+          </ul>
+        </section>
+    
+        <section>
+          <h3>⚙️ Technical Details</h3>
+          <ul>
+            <li>Canvas-based rendering engine</li>
+            <li>Compressed images and audio for fast loading</li>
+            <li>May load slowly on first load due to GitHub hosting</li>
+          </ul>
+        </section>
+  
+    
+        <section>
+          <h3>👨‍🚀 Created By</h3>
+          <p>Rom Sheynis & Lioz Shor</p>
+        </section>
+      </div> 
+
+    
+        <div style="text-align: center; margin-top: 1em;">
+          <button>OK</button>
+        </div>
       </form>
     </dialog>
+    
     
 
     <script type="module" src="js/game.js"></script>
@@ -154,35 +217,22 @@
     <script type="module" src="js/nav.js"></script>
     <script type="module" src ="js/config.js"></script>
 
-    <button id="mainMenuButton" class="side-button" style="top: 20px;">Main Menu</button>
-    <button id="aboutButton" class="side-button" style="top: 80px;">About</button>
-    <button id="settingsButton" class="side-button" style="top: 140px;">Settings</button>    
-    <button id="newGameButton" class="arcade-button">NEW GAME</button>
-
-
-    <template id="configFormTemplate">
-      <div class="config-container">
-        <h1>Game Configuration</h1>
-    
-        <div class="config-row">
-          <label>Fire Key:</label>
-          <span id="currentFireKey">Not set</span>
-          <button id="setFireKeyBtn" class="secondary-btn">Change</button>
-        </div>
-    
-        <div class="config-row">
-          <label for="gameDurationInput">Game Duration (minutes):</label>
-          <input type="number" id="gameDurationInput" min="2" value="2" />
-        </div>
-    
-        <div class="config-actions">
-          <button id="saveSettingsBtn">Save Settings</button>
-        </div>
-    
-        <p id="configSavedMessage" class="hidden">Settings saved ✅</p>
-      </div>
-    </template>
-    
+    <button id="muteButton" class="mute-btn">🔊</button>
+    <button id="mainMenuButton" class="left-side-button" style="top: 20px;">Main Menu</button>
+    <button id="aboutButton" class="left-side-button" style="top: 80px;">About</button>
+    <button id="settingsButton" class="left-side-button" style="top: 140px;">Settings</button>   
+    <button id="viewHighScores" class="right-side-button" style="top: 20px;">🏆 High Scores</button>
+         <button id="newGameButton" class="arcade-button">NEW GAME</button>
+         <script type="module">
+          import { preloadAssets } from './js/utils.js';
+          import { showScreen } from './js/nav.js'; 
+      
+          preloadAssets(() => {
+            document.getElementById("loadingScreen").style.display = "none";
+            showScreen("homeScreen"); 
+          });
+        </script>
+      
 
 </body>
 </html>

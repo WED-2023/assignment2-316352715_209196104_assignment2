@@ -1,19 +1,31 @@
 .form-container {
-    width: 100%;
-    box-sizing: border-box;
-    max-width: 400px;
-    margin: 3rem auto;
-    padding: 2rem;
-    background-color: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  }
+  max-width: 400px;
+  width: 100%;
+  max-height: 80vh;        /* גובה מרבי */
+  overflow-y: auto;        /* גלילה פנימית אם צריך */
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 0 40px #0072ff;
+  color: #00ffff;
+  border: 2px solid #00c6ff;
+
+
+}
+
+
+
   
   .form-container h2 {
     text-align: center;
     margin-bottom: 1.5rem;
     font-family: Arial, sans-serif;
-    color: #333;
+    color: #00abab;
+    text-shadow: 0 0 10px #00ffff;
+    font-family: 'Orbitron', sans-serif;
+
+
   }
   
   .form-container form {
@@ -29,19 +41,27 @@
   }
   
   .form-container input {
+    background-color: white;       /* 🟢 לבן */
+    color: #333;                   /* טקסט כהה */
+    border: 2px solid #00c6ff;     /* גבול זוהר */
+    border-radius: 8px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 14px;
     padding: 0.7rem;
     margin-bottom: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    font-size: 14px;
-    font-family: inherit;
-    transition: border-color 0.3s;
+    box-shadow: 0 0 10px #00c6ff;  /* אפקט ניאון עדין */
+    transition: box-shadow 0.3s, border-color 0.3s;
   }
   
+  
+  
   .form-container input:focus {
-    border-color: #007BFF;
     outline: none;
+    border-color: #00ffff;
+    box-shadow: 0 0 15px #00ffff;
   }
+  
+  
   
   .form-container button {
     padding: 0.8rem;
@@ -53,11 +73,32 @@
     font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s;
+    font-family: 'Orbitron', sans-serif;
+    box-shadow: 0 0 15px #00c6ff;
+    background: linear-gradient(145deg, #00c6ff, #0072ff);
+  
   }
+  
   
   .form-container button:hover {
     background-color: #0056b3;
   }
+
+  .form-button {
+    padding: 0.8rem;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-family: 'Orbitron', sans-serif;
+    box-shadow: 0 0 15px #00c6ff;
+    background: linear-gradient(145deg, #00c6ff, #0072ff);
+  }
+  
   
   .show-password {
     display: flex;
@@ -94,12 +135,54 @@
     cursor: pointer;
     box-shadow: 0 0 15px #00c6ff;
     transition: 0.3s ease;
+    font-family: 'Orbitron', sans-serif;
+
+  }
+
+
+  .left-side-button {
+    position: fixed;
+    left: 20px;
+    width: 140px;
+    background: transparent;
+    border: 2px solid #00c6ff;
+    color: #00c6ff;
+    font-weight: bold;
+    padding: 10px 0;
+    border-radius: 30px;
+    text-align: center;
+    box-shadow: none;
+    font-family: 'Orbitron', sans-serif;
+    transition: all 0.3s ease;
   }
   
-  button:hover {
-    transform: scale(1.1);
-    box-shadow: 0 0 25px #00c6ff;
+
+
+  .right-side-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    white-space: nowrap;
+    position: fixed;
+    right: 20px;
+    width: auto;
+    background: transparent;
+    border: 2px solid #00c6ff;
+    color: #00c6ff;
+    font-weight: bold;
+    padding: 14px 28px;               /* יותר מרווח פנימי */
+    border-radius: 30px;
+    text-align: center;
+    box-shadow: none;
+    font-family: 'Orbitron', sans-serif;
+    transition: all 0.3s ease;
   }
+
+
+  
+
+
   #mainMenuButton {
     position: fixed;
     top: 20px;
@@ -162,6 +245,46 @@
     transform: scale(1.2);
   }
   
+  .scrollable-dialog-form {
+    max-width: 400px;
+    max-height: 80vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Orbitron', sans-serif;
+  }
+  
+  .scrollable-content {
+    overflow-y: auto;
+    flex-grow: 1;
+    padding-right: 4px; 
+    margin-bottom: 1rem;
+  }
+
+  .profile-link {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 10px 20px;
+    border-radius: 30px;
+    border: 2px solid #00c6ff;
+    background: transparent;
+    color: #00c6ff;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 8px #00c6ff;
+  }
+  
+  .profile-link:hover {
+    background-color: #00c6ff;
+    color: black;
+    box-shadow: 0 0 20px #00ffff;
+    transform: scale(1.05);
+  }
+  
+  
   
   
   
@@ -195,6 +318,18 @@
     margin-top: 10px;
     transition: opacity 0.4s ease;
   }
+
+  #registerScreen {
+    height: 100vh;
+    overflow: hidden; /* או ללא הגדרה – העיקר שלא יהיה auto */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  
+  
+
   
   .hidden {
     opacity: 0;
@@ -249,9 +384,28 @@
     color: black;
     box-shadow: 0 0 15px #00c6ff;
   }
+
   #newGameButton {
-    display: none;
+    font-size: 1rem;         /* במקום 1.5rem */
+    padding: 8px 20px;       /* במקום 15px 40px */
+    border-radius: 12px;     /* במקום 15px */
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 10000;
+    display: none; 
   }
+  
+
+  #rightSidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    height: 100%;
+  }
+  
   
 
   .arcade-button {
@@ -311,80 +465,237 @@
       opacity: 0.6;
     }
   }
-  /* #gameCanvas {
-    width: 90vw;
-    max-width: 700px;
-    aspect-ratio: 16 / 9;
-    height: auto;
-    background-color: #111;
-    border-radius: 12px;
-    image-rendering: pixelated;
-  } */
 
   #gameScreen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    height: 100vh;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+  
+  #gameWrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    max-width: 95vw;
+    max-height: 90vh;
+    overflow: hidden;
+    border: 3px solid #00c6ff;
+    border-radius: 20px;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.7);
+    box-shadow: 0 0 30px #00c6ff;
+    gap: 30px;
+  }
+  
+  #gameCanvas {
+    width: 70vw;
+    max-width: 720px;
+    aspect-ratio: 4 / 3;
+    height: auto;
+    border: 4px solid #ffffff44;
+    border-radius: 16px;
+    background-color: #111;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+    transition: transform 0.3s ease;
+  }
+  .floating-scores-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+  
+    padding: 12px 24px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #00c6ff;
+    border: 2px solid #00c6ff;
+    background: transparent;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: none;
+    transition: all 0.3s ease;
+  }
+  
+  
+
+  #highScoresBox {
+    position: fixed;
+    top: 140px;
+    right: 20px;
+    padding: 10px 20px;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    border: 2px solid #00c6ff;
+    border-radius: 12px;
+    font-family: 'Orbitron', sans-serif;
+    z-index: 9999;
+    max-width: 300px;
+    box-shadow: 0 0 15px #00c6ff;
+    transition: opacity 0.3s ease;
+    opacity: 0;
+    pointer-events: none;
+  }
+  
+  #highScoresBox.visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  
+  #highScoresBox h3 {
+    margin-top: 0;
+    font-size: 18px;
+  }
+  
+  #highScoresBox ol {
+    padding-left: 1.2rem;
+    margin: 0;
+  }
+  
+  #highScoresBox p {
+    margin-top: 10px;
+    font-size: 14px;
+    font-style: italic;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .high-scores.hidden {
+    opacity: 0;
+    pointer-events: none;
+    display: none; /* ⬅️ חשוב! */
+    transition: opacity 0.3s ease;
+  }
+  
+  .high-scores.visible {
+    opacity: 1;
+    pointer-events: auto;
+    display: block; /* ⬅️ חשוב! */
+    transition: opacity 0.3s ease;
+  }
+  
+  
+  
+  .left-side-button:hover,
+  .right-side-button:hover,
+  button:not(#newGameButton):hover,
+  #aboutButton:hover,
+  #settingsButton:hover,
+  .floating-scores-btn:hover {
+    transform: scale(1.1);
+    background-color: #00c6ff;
+    color: black;
+    box-shadow: 0 0 15px #00c6ff;
+  }
+
+  #gameDurationInput {
+    width: 80px;
+    padding: 0.4rem;
+    font-size: 1rem;
+    text-align: center;
+  }
+  
+  
+  button:active {
+    transform: scale(0.95);
+    transition: transform 0.1s ease;
+  }
+  
+
+
+
+  
+  
+  
+  
+  #loadingScreen {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    background: black;
+    color: #00ffff;
+    font-family: 'Orbitron', sans-serif;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 30px;
-    padding: 40px 20px;
-    background: linear-gradient(to bottom, #0f0f0f, #1e1e1e);
-    min-height: 100vh;
-    box-sizing: border-box;
+    z-index: 10000;
   }
   
-  #gameCanvas {
-    border: 4px solid #ffffff44;
-    border-radius: 16px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+  .loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 6px solid #00ffff;
+    border-top: 6px solid transparent;
+    border-radius: 50%;
+    margin-top: 20px;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  #progressWrapper {
+    width: 300px;
+    height: 20px;
     background-color: #111;
-    transition: transform 0.3s ease;
-  }
-  
-  #gameCanvas:hover {
-    transform: scale(1.01);
-  }
-  
-  
-  
-  
-  #highScoresBox {
-    position: absolute;
-    top: 50px;
-    right: 30px;
-    background: rgba(0, 0, 0, 0.7);
-    border: 2px solid #00ffff;
-    padding: 10px 20px;
-    color: white;
-    font-family: 'Orbitron', sans-serif;
-    z-index: 100;
+    border: 2px solid #00c6ff;
     border-radius: 10px;
-    max-width: 200px;
+    overflow: hidden;
+    margin-top: 20px;
   }
   
-  #highScoresBox h3 {
-    font-size: 1.2rem;
-    margin-bottom: 10px;
-    text-align: center;
-    color: #ffd700;
+  #progressBar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #00ffff, #0072ff);
+    box-shadow: 0 0 10px #00ffff;
+    transition: width 0.2s ease;
   }
   
-  #scoreList {
-    list-style: none;
+  #loadingPercent {
+    margin-top: 10px;
+    font-family: 'Orbitron', sans-serif;
+    color: #00ffff;
+    font-size: 1rem;
+  }
+  .mute-btn {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    width: 38px;
+    height: 38px;
+    font-size: 18px;
+    line-height: 1;
+    border: 2px solid #00c6ff;
+    border-radius: 50%;
+    background: black;
+    color: #00c6ff;
+    cursor: pointer;
+    z-index: 9999;
+    box-shadow: 0 0 8px #00c6ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     padding: 0;
-    margin: 0;
+    transition: all 0.3s ease;
   }
   
-  #scoreList li {
-    margin: 4px 0;
-    text-align: center;
+  .mute-btn:hover {
+    transform: scale(1.1);
+    background-color: #00c6ff;
+    color: black;
   }
-  
-
-
-
-  
-  
   
   
   
