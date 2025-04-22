@@ -35,6 +35,12 @@ heroImage.src = "assets/images/chicken.webp";
 
 const monsterImage = new Image();
 monsterImage.src = "assets/images/kfc.webp";
+const greenMonsterImage = new Image();
+greenMonsterImage.src = "assets/images/greenEnemy.webp";
+const orangeMonsterImage = new Image();
+orangeMonsterImage.src = "assets/images/orangeEnemy.webp";
+const blackMonsterImage = new Image();
+blackMonsterImage.src = "assets/images/blackEnemy.webp";
 
 const heartImage = new Image();
 heartImage.src = "assets/images/heart.webp";
@@ -91,7 +97,14 @@ function initMonsters() {
 
   for (let row = 0; row < rows; row++) {
     for (let col = 0; col < cols; col++) {
+      let color;
+      if (row == 0) { color = "red"}
+      else if (row == 1) { color = "green"}
+      else if (row == 2) { color = "orange"}
+      else if (row == 3) { color = "black"}
       monsters.push({
+        row:row,
+        enemy_color: color,
         x: startX + col * (monsterWidth + monsterSpacing),
         y: startY + row * (monsterHeight + monsterSpacing),
         width: monsterWidth,
@@ -124,8 +137,8 @@ gameSong.currentTime = 0;
 
   speedInterval = setInterval(() => {
     if (increaseTimes > 0) {
-      monsterSpeed += 5;
-      ENEMY_BULLET_SPEED += 5;
+      monsterSpeed += 3;
+      ENEMY_BULLET_SPEED += 3;
       increaseTimes--;
     } else {
       clearInterval(speedInterval);
@@ -239,10 +252,10 @@ function update() {
       const distance = Math.sqrt(dx * dx + dy * dy);
 
       if (distance < monster.width / 2 + bullet.radius) {
-        if (mIndex <= 4) score += 20;
-        else if (mIndex <= 9) score += 15;
-        else if (mIndex <= 14) score += 10;
-        else if (mIndex <= 19) score += 5;
+        if (monster.row === 0) score += 20;
+        else if (monster.row === 1) score += 15;
+        else if (monster.row === 2) score += 10;
+        else if (monster.row === 3) score += 5;
         monsters.splice(mIndex, 1);
         bullets.splice(bIndex, 1);
         if (monsters.length === 0) {
@@ -292,7 +305,10 @@ function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   if (bgImage.complete) ctx.drawImage(bgImage, 0, 0, canvas.width, canvas.height);
   monsters.forEach(monster => {
-    if (monsterImage.complete) ctx.drawImage(monsterImage, monster.x, monster.y, monster.width, monster.height);
+    if (monsterImage.complete && monster.enemy_color === "red") ctx.drawImage(monsterImage, monster.x, monster.y, monster.width, monster.height);
+    else if (monsterImage.complete && monster.enemy_color === "orange") ctx.drawImage(orangeMonsterImage, monster.x, monster.y, monster.width, monster.height);
+    else if (monsterImage.complete && monster.enemy_color === "black") ctx.drawImage(blackMonsterImage, monster.x, monster.y, monster.width, monster.height);
+    else if (monsterImage.complete && monster.enemy_color === "green") ctx.drawImage(greenMonsterImage, monster.x, monster.y, monster.width, monster.height);
   });
   if (heroImage.complete) ctx.drawImage(heroImage, hero.x, hero.y, hero.width, hero.height);
   ctx.fillStyle = "red";
