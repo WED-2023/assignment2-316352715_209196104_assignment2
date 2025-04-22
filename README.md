@@ -1,4 +1,4 @@
-# 🐔 Chicken Spaceship - Arcade Game
+# Chicken Spaceship - Arcade Game
 
 **Chicken Spaceship** is a retro-style arcade shooter game where you play as a brave space chicken battling waves of fried chicken invaders on a quest for galactic glory.
 
@@ -6,7 +6,7 @@ Play now: https://wed-2023.github.io/assignment2-316352715_209196104_assignment2
 
 ---
 
-## 🎮 Features
+##  Features
 
 - **Real-time shooting gameplay** on an HTML `<canvas>`
 - **Custom fire key** configuration
@@ -25,7 +25,7 @@ Play now: https://wed-2023.github.io/assignment2-316352715_209196104_assignment2
 
 ---
 
-## 📁 Project Structure
+##  Project Structure
 
 ```text
 /
@@ -74,14 +74,14 @@ Play now: https://wed-2023.github.io/assignment2-316352715_209196104_assignment2
 ---
 
 
-📦 Optimization Notes
+Optimization Notes
 All images and sound files have been compressed for faster page loading.
 
 However, due to GitHub Pages server latency, the initial load may take a few seconds until assets are fully retrieved and cached.
 ---
 
 
-## ⚙️ Technologies
+##  Technologies
 
 - HTML5
 - CSS3
@@ -91,7 +91,7 @@ However, due to GitHub Pages server latency, the initial load may take a few sec
 
 ---
 
-## 🔇 Audio Notes
+## Audio Notes
 
 - Sounds and music will only play **after the first user click** (due to browser autoplay restrictions)
 - Use the **mute button** to toggle sound
@@ -99,7 +99,7 @@ However, due to GitHub Pages server latency, the initial load may take a few sec
 
 ---
 
-## ✨ Credits
+##  Credits
 
 - 👨‍💻 Code: Rom Sheynis & Lioz Shor
 - 🎨 Graphics: AI + custom icons  
