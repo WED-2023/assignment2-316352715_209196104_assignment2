@@ -2,6 +2,8 @@
 
 **Chicken Spaceship** is a retro-style arcade shooter game where you play as a brave space chicken battling waves of fried chicken invaders on a quest for galactic glory.
 
+Play now: https://wed-2023.github.io/assignment2-316352715_209196104_assignment2/
+
 ---
 
 ## 🎮 Features
