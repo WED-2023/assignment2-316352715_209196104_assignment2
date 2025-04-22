@@ -107,11 +107,13 @@
           <span id="currentFireKey">Not set</span>
           <button id="setFireKeyBtn" class="secondary-btn">Change</button>
         </div>
-    
         <div class="config-row">
           <label for="gameDurationInput">Game Duration (minutes):</label>
-          <input type="number" id="gameDurationInput" min="2" value="2" />
+          <input type="number" id="gameDurationInput" min="2"/>
         </div>
+        <div class="duration-hint">(Minimum 2 minutes)</div>
+
+        
     
         <div class="config-actions">
           <button id="saveSettingsBtn">Save Settings</button>
@@ -144,7 +146,7 @@
 
           </form>
           <p class="login-hint">
-            <span class="emoji">🧑‍🚀</span> Guest access available:<br>
+            Guest access available:<br>
             <strong>Username:</strong> <code>p</code><br>
             <strong>Password:</strong> <code>testuser</code>
           </p>

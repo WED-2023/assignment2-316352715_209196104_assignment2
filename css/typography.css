@@ -48,3 +48,11 @@ h1 {
   content: "🛸";
   margin-left: 10px;
 }
+
+.duration-hint {
+  font-size: 0.75em;
+  color: #ccc;
+  text-align: center;
+  margin-left: -130px; 
+
+}

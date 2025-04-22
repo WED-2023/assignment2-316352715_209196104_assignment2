@@ -8,7 +8,7 @@ const successSound = new Audio("assets/sounds/savedSettings.mp3");
 
 
 let fireKey = sessionStorage.getItem("fireKey") || null;
-let gameDuration = parseInt(sessionStorage.getItem("gameDuration")) || 2;
+let gameDuration = parseInt(sessionStorage.getItem("gameDuration"));
 
 export function renderConfigWizard() {
   const wrapper = document.getElementById("configSettings");
